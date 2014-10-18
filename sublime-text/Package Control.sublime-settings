@@ -1,0 +1,13 @@
+{
+  "installed_packages": [
+    "Package Control",
+    "AdvancedNewFile",
+    "Alignment",
+    "Bracket Highlighter",
+    "DashDoc",
+    "Emmet",
+    "GitGutter",
+    "Markdown Editing",
+    "Side Bar"
+  ]
+}
