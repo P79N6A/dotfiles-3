@@ -71,3 +71,16 @@ xcuserdata
 *.moved-aside
 DerivedData
 *.xcuserstate
+
+##########
+# IDEA
+##########
+.idea
+
+##########
+# Emacs
+##########
+#TAGS
+GTAGS
+GPATH
+GRTAGS

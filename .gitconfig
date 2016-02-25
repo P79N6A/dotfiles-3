@@ -1,11 +1,40 @@
 [alias]
   # Show verbose output about tags, branches or remotes
-  tags = tag -l
-  branches = branch -a
+	a  = add
+  b  = branch
+	c  = commit
+	d  = diff
+	f  = fetch
+	m  = merge
+	g  = grep -Ii
+	s  = status
+	ss = status -s
+	sts = stash -u
+	co = checkout
+	cob = checkout -b
+	cot = checkout --track
+	rb = rebase
+	rs = reset
+	cp = cherry-pick
+	tags = tag -l
+  br = branch -a
+	pu = push
+	pl = pull --rebase
   remotes = remote -v
+	dc = diff --changed
+	ds = diff --staged
+	one = log --pretty=oneline
+	outstanding = rebase -i @{u}
+	unpushed = log @{u}
+	did = diff HEAD@{1} HEAD
+	dad = !"git show-branch -a | ack '\\*' | ack -v \"`git rev-parse --abbrev-ref HEAD`\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//'"
+	wc = whatchanged
+	uncommit = reset --soft HEAD^
+	lg = log -p
+	type = cat-file -t
+	dump = cat-file -p
   # Pretty log output
   hist = log --graph --pretty=format:'%Cred%h%Creset %s%C(yellow)%d%Creset %Cgreen(%cr)%Creset [%an]' --abbrev-commit --date=relative
-
 [color]
   # Use colors in Git commands that are capable of colored output when outputting to the terminal
   ui = auto
@@ -22,11 +51,40 @@
   added = yellow
   changed = green
   untracked = cyan
-
 [user]
-  name = Rick Yu
-  email = cosmtrek@gmail.com
-
+	name = Rick Yu
+	email = cosmtrek@gmail.com
 [core]
-  editor = vim
-  excludesfile = ~/.gitignore
+  editor = emacsclient
+	excludesfile = /Users/cosmtrek/.gitignore
+	quotepath = false
+	autocrlf = input
+	safecrlf = true
+	whitespace = cr-at-eol
+[push]
+	default = current
+[gui]
+	encoding = utf-8
+[i18n]
+	commitencoding = utf-8
+[http]
+	proxy = socks5://127.0.0.1:1080
+[branch]
+	autosetuprebase = always
+[rerere]
+	enabled = false
+	autoupdate = true
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[https]
+	proxy = socks5://127.0.0.1:1080
+[git-up "bundler"]
+	check = true
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
