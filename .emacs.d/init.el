@@ -13,23 +13,15 @@
 ;;; Code:
 
 ;; Load path
-(setq load-path (cons "~/Code/dotfiles/emacs.d" load-path)) 
 (add-to-list 'load-path (expand-file-name "conf" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "plugins" user-emacs-directory))
-(require 'init-benchmarking) ;; Measure startup time
-(setq load-prefer-newer t)
+
+(defun sanityinc/time-subtract-millis (b a)
+  (* 1000.0 (float-time (time-subtract b a))))
 
 (defconst *is-a-mac* (eq system-type 'darwin))
 
-;; Temporarily reduce gc during startup
-(defconst sanityinc/initial-gc-cons-threshold gc-cons-threshold
-	"Initial value of `gc-cons-threshold' at start-up time.")
-(setq gc-cons-threshold (* 256 1024 1024))
-(add-hook 'after-init-hook
-          (lambda () (setq gc-cons-threshold sanityinc/initial-gc-cons-threshold)))
-
-;;; Debug
-(setq debug-on-error 1)
+(eval-when-compile (require 'cl))
 
 ;;; Bootstrap
 (require 'init-utils)
@@ -38,27 +30,34 @@
 (require 'init-settings)  ;; Better defaults
 
 ;;; Local configs
-(require-package 'wgrep)
 (require-package 'diminish)
-(require-package 'scratch)
 (require-package 'mwe-log-commands)
 
+;; Set default theme
+(require-package 'color-theme-sanityinc-solarized)
+(setq-default custom-enabled-themes '(sanityinc-solarized-light))
+(defun reapply-themes ()
+  "Forcibly load the themes listed in `custom-enabled-themes'."
+  (dolist (theme custom-enabled-themes)
+    (unless (custom-theme-p theme)
+      (load-theme theme)))
+  (custom-set-variables `(custom-enabled-themes (quote ,custom-enabled-themes))))
+(add-hook 'after-init-hook 'reapply-themes)
+
 (require 'init-frame-hooks)
-(require 'init-xterm)
-(require 'init-themes)
 (require 'init-gui-frames)
+
 (require 'init-dired)
 (require 'init-isearch)
 (require 'init-grep)
 (require 'init-uniquify)
 (require 'init-ibuffer)
 (require 'init-flycheck)
-(require 'init-flyspell)
 
 (require 'init-recentf)
 (require 'init-ido)
+(require 'init-company)
 (require 'init-hippie-expand)
-(require 'init-auto-complete)
 (require 'init-windows)
 (require 'init-sessions)
 (require 'init-fonts)
@@ -66,46 +65,33 @@
 
 (require 'init-editing-utils)
 (require 'init-whitespace)
-(require 'init-fci)
+(require 'init-paredit)
 
-(require 'init-projectile)
 (require 'init-vc)
 (require 'init-git)
+(require 'init-projectile)
+(require 'init-dash)
+(require 'init-ggtags)
 
 (require 'init-compile)
-(require 'init-markdown)
-;; (require 'init-csv)
-(require 'init-javascript)
-(require 'init-nxml)
-(require 'init-html)
-(require 'init-css)
-;; (require 'init-python-mode)
-(require 'init-go-mode)
 (require 'init-ruby-mode)
-;; (require 'init-rails)
-(require 'init-sql)
-(require 'init-paredit)
+(require 'init-go-mode)
+(require 'init-javascript)
+(require 'init-html)
+(require 'init-nxml)
+(require 'init-css)
 (require 'init-lisp)
-;; (require 'init-crontab)
-;; (require 'init-org)
+(require 'init-sql)
+(require 'init-markdown)
+(require 'init-csv)
+(require 'init-python-mode)
 ;; (unless (version<= emacs-version "24.2")
 ;;   (require 'init-clojure)
 ;;   (require 'init-clojure-cider))
 
-(require 'init-dash)
-(require 'init-ggtags)
-
-;; (require-package 'gnuplot)
-;; (require-package 'htmlize)
-;; (when *is-a-mac*
-;;   (require-package 'osx-location))
-;; (require-package 'regex-tool)
-
-;; Show startup time
-;; (add-hook 'after-init-hook
-;; 	  (lambda ()
-;; 	    (message "init completed in %.2fms"
-;; 		     (sanityinc/time-subtract-millis after-init-time before-init-time))))
+(require-package 'gnuplot)
+(require-package 'htmlize)
+(require-package 'regex-tool)
 
 ;; Daemon mode
 (require 'server)
@@ -113,7 +99,6 @@
   (server-start))
 
 (provide 'init)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -123,6 +108,7 @@
  '(ace-isearch-input-length 7)
  '(ace-isearch-jump-delay 0.25)
  '(ace-isearch-use-jump (quote printing-char))
+ '(custom-enabled-themes (quote sanityinc-solarized-light))
  '(custom-safe-themes
    (quote
     ("4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" default)))
@@ -132,4 +118,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(company-preview ((t (:foreground "darkgray" :underline t))))
+ '(company-preview-common ((t (:inherit company-preview))))
+ '(company-tooltip ((t (:background "lightgray" :foreground "black"))))
+ '(company-tooltip-common ((((type x)) (:inherit company-tooltip :weight bold)) (t (:inherit company-tooltip))))
+ '(company-tooltip-common-selection ((((type x)) (:inherit company-tooltip-selection :weight bold)) (t (:inherit company-tooltip-selection))))
+ '(company-tooltip-selection ((t (:background "steelblue" :foreground "white")))))

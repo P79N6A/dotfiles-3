@@ -51,7 +51,7 @@
               column-number-mode t                    ; Display the current column number
               require-final-newline t                 ; Ensure a newline at the end if there isn't already one there.
               indent-tabs-mode t                      ; Always indent using spaces, never tabs.
-              default-tab-width 2                     ; Set tab width to 2.
+              default-tab-width 8                     ; Set tab width to 2.
               standard-indent  2                      ; Set standard indent to 2 rather that 4.
               delete-selection-mode t                 ; Replace the active region just by typing text.
               save-interprogram-paste-before-kill t   ; Delete text without kill ring.

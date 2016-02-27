@@ -145,7 +145,8 @@
 (defun sanityinc/emacs-lisp-setup ()
   "Enable features useful when working with elisp."
   (set-up-hippie-expand-for-elisp)
-  (ac-emacs-lisp-mode-setup))
+  ;;(ac-emacs-lisp-mode-setup)
+  )
 
 (defconst sanityinc/elispy-modes
   '(emacs-lisp-mode ielm-mode)

@@ -1,5 +1,5 @@
 ;;; Character sets
-(set-face-attribute 'default nil :font "Hack-14")
+(set-face-attribute 'default nil :font "Hack-13")
 
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
   (set-fontset-font (frame-parameter nil 'font)

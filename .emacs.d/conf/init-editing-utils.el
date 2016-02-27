@@ -135,6 +135,7 @@
 
 ;; imenu list
 (require-package 'imenu-list)
+(setq imenu-list-focus-after-activation t)
 (global-set-key (kbd "C-'") #'imenu-list-minor-mode)
 
 (require-package 'multiple-cursors)

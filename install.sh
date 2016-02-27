@@ -19,7 +19,7 @@ link_to() {
 link_emacs() {
     local emacs="$HOME/$EMACS"
     mkdir -p $emacs $emacs/conf $emacs/plugins
-    ln -fs "$PWD/init.el" "$emacs/init.el"
+    ln -fs "$PWD/$EMACS/init.el" "$emacs/init.el"
     cd $EMACS/conf/
     for cf in *; do
         link_to "$PWD/$cf" "$emacs/conf"
