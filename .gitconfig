@@ -68,7 +68,9 @@
 [i18n]
 	commitencoding = utf-8
 [http]
-	proxy = socks5://127.0.0.1:1080
+	proxy = http://127.0.0.1:10240
+[https]
+	proxy = http://127.0.0.1:10240
 [branch]
 	autosetuprebase = always
 [rerere]
@@ -80,8 +82,6 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
-[https]
-	proxy = socks5://127.0.0.1:1080
 [git-up "bundler"]
 	check = true
 [filter "lfs"]

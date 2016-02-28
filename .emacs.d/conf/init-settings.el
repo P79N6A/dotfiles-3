@@ -11,7 +11,21 @@
 (setq gc-cons-threshold 50000000)
 
 ;; Http proxy
-;; (setenv "http_proxy" "http://127.0.0.1:10240")
+(defun cosmtrek/proxy (port)
+  "Set http proxy url."
+  (interactive
+   (list
+    (read-string "Input port or use default 10240?")))
+  (if (equal port "")
+      (setq port "10240"))
+  (message (format "http://127.0.0.1:%s" port))
+  (setenv "http_proxy" (format "http://127.0.0.1:%s" port)))
+
+(defun cosmtrek/direct ()
+  "Cancel http proxy."
+  (interactive)
+  (setenv "http_proxy" nil))
+
 (setq tramp-default-method "ssh")
 
 ;; The toolbar, menu bar, and scroll bar are all turned off.

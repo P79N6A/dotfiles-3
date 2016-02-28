@@ -92,6 +92,7 @@
 (require-package 'gnuplot)
 (require-package 'htmlize)
 (require-package 'regex-tool)
+(require-package 'restclient)
 
 ;; Daemon mode
 (require 'server)

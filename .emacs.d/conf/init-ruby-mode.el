@@ -19,6 +19,14 @@
               (unless (derived-mode-p 'prog-mode)
                 (run-hooks 'prog-mode-hook)))))
 
+;; -- GODAMMIT RUBY INDENTATION!!! --
+;; don't indent parenthesis in a weird way
+(setq ruby-align-chained-calls nil
+      ruby-align-to-stmt-keywords '(if begin case)
+      ruby-deep-indent-paren nil
+      ruby-deep-indent-paren-style nil
+      ruby-use-smie t)
+
 (add-hook 'ruby-mode-hook 'subword-mode)
 
 (after-load 'page-break-lines
