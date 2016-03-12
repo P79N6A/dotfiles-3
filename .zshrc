@@ -45,3 +45,4 @@ alias gfh='git flow hotfix'
 alias pg='postgres -D /usr/local/var/postgres'
 alias rds=redis-server
 alias wttr='curl -4 wttr.in/Beijing'
+alias cow='cow -color -request'

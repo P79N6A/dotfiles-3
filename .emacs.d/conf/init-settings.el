@@ -15,9 +15,9 @@
   "Set http proxy url."
   (interactive
    (list
-    (read-string "Input port or use default 10240?")))
+    (read-string "Input port or use default 8964?")))
   (if (equal port "")
-      (setq port "10240"))
+      (setq port "8964"))
   (message (format "http://127.0.0.1:%s" port))
   (setenv "http_proxy" (format "http://127.0.0.1:%s" port)))
 

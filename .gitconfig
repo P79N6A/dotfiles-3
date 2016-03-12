@@ -68,9 +68,9 @@
 [i18n]
 	commitencoding = utf-8
 [http]
-	proxy = http://127.0.0.1:10240
+	proxy = http://127.0.0.1:8964/pac
 [https]
-	proxy = http://127.0.0.1:10240
+	proxy = http://127.0.0.1:8964/pac
 [branch]
 	autosetuprebase = always
 [rerere]
