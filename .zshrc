@@ -31,11 +31,9 @@ export TERM=xterm-256color
 ################################### Rbenv ######################################
 eval "$(rbenv init -)"
 
-################################### Docker #####################################
-eval "$(docker-machine env dev)"
-
 ################################### Alias ######################################
 alias d=docker
+alias denv='eval "$(docker-machine env dev)"'
 alias e='/usr/local/Cellar/emacs/24.5/bin/emacsclient -t'
 alias eui='/usr/local/Cellar/emacs/24.5/bin/emacsclient -n'
 alias g=git
