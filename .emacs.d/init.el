@@ -109,10 +109,11 @@
  '(ace-isearch-input-length 7)
  '(ace-isearch-jump-delay 0.25)
  '(ace-isearch-use-jump (quote printing-char))
- '(custom-enabled-themes (quote sanityinc-solarized-light))
+ '(custom-enabled-themes (quote (sanityinc-solarized-light)))
  '(custom-safe-themes
    (quote
     ("4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" default)))
+ '(safe-local-variable-values (quote ((encoding . utf-8))))
  '(session-use-package t nil (session)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
