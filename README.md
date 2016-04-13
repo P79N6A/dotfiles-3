@@ -8,7 +8,8 @@ brew install emacs --with-cocoa
 ```
 
 [zplug](https://github.com/b4b4r07/zplug) `git clone https://github.com/b4b4r07/zplug ~/.zplug`
-[pure](https://github.com/sindresorhus/pure)
+
+[pure theme](https://github.com/sindresorhus/pure)
 
 ```
 n stable # install node stable version
