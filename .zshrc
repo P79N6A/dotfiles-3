@@ -4,15 +4,13 @@ source ~/.zplug/zplug
 zplug "sindresorhus/pure"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-syntax-highlighting"
-zplug "tarruda/zsh-autosuggestions"
-zplug "b4b4r07/enhancd", of:enhancd.sh
-zplug "supercrabtree/k"
 zplug "plugins/git", from:oh-my-zsh, if:"which git"
 zplug "unixorn/git-extra-commands"
-zplug "oldratlee/hacker-quotes"
 zplug "tj/n", do:"make install"
-zplug "felixr/docker-zsh-completion"
-zplug "hlissner/zsh-autopair"
+# zplug "tarruda/zsh-autosuggestions"
+# zplug "b4b4r07/enhancd", of:enhancd.sh
+# zplug "supercrabtree/k"
+# zplug "oldratlee/hacker-quotes"
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -29,9 +27,14 @@ export LANG=en_US.UTF-8
 export TERM=xterm-256color
 
 ################################### Rbenv ######################################
-eval "$(rbenv init -)"
+# eval "$(rbenv init -)"
 
-################################### Alias ######################################
+################################### Rvm ######################################
+# install ruby comment out the zplug section
+source ~/.rvm/scripts/rvm
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+################################## #Alias ######################################
 alias d=docker
 alias denv='eval "$(docker-machine env dev)"'
 alias e='/usr/local/Cellar/emacs/24.5/bin/emacsclient -t'
