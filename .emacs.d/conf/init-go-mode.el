@@ -2,7 +2,7 @@
 (require-package 'go-mode)
 (require-package 'company-go)
 
-(setenv "GOPATH" "/Users/cosmtrek/Code/go")
+(setenv "GOPATH" "~/Code/go")
 (setenv "GOROOT" "/usr/local/go")
 (load "$GOPATH/src/golang.org/x/tools/cmd/oracle/oracle.el")
 

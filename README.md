@@ -19,3 +19,11 @@ npm install --global pure-prompt # pure theme
 Remember to switch shell from bash to zsh `chsh -s /bin/zsh USENAME`
 
 Run `make install` to install.
+
+## Emacs extra
+
+First install golang environment, then download go tools.
+
+```
+go get golang.org/x/tools/cmd/oracle
+```
