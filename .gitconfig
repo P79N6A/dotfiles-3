@@ -68,9 +68,10 @@
 [i18n]
 	commitencoding = utf-8
 [http]
-	proxy = http://127.0.0.1:8964/pac
+	proxy = http://127.0.0.1:8964
+	postBuffer = 1048576000
 [https]
-	proxy = http://127.0.0.1:8964/pac
+	proxy = http://127.0.0.1:8964
 [branch]
 	autosetuprebase = always
 [rerere]

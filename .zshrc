@@ -7,10 +7,6 @@ zplug "zsh-users/zsh-syntax-highlighting"
 zplug "plugins/git", from:oh-my-zsh, if:"which git"
 zplug "unixorn/git-extra-commands"
 zplug "tj/n", do:"make install"
-# zplug "tarruda/zsh-autosuggestions"
-# zplug "b4b4r07/enhancd", of:enhancd.sh
-# zplug "supercrabtree/k"
-# zplug "oldratlee/hacker-quotes"
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -48,3 +44,4 @@ alias rds=redis-server
 alias wttr='curl -4 wttr.in/Beijing'
 alias cow='cow -color -request'
 alias ip='curl ip.cn'
+alias vi='/usr/local/bin/vim' # brew install vim

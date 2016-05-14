@@ -78,9 +78,9 @@ DerivedData
 .idea
 
 ##########
-# Emacs
+# Tag
 ##########
-#TAGS
+tags
 GTAGS
 GPATH
 GRTAGS

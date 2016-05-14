@@ -10,6 +10,10 @@
 (add-hook 'web-mode-hook  'web-mode-hook-settings)
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
+(require-package 'emmet-mode)
+(add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
+(add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
+
 ;; (require-package 'tidy)
 ;; (add-hook 'html-mode-hook (lambda () (tidy-build-menu html-mode-map)))
 ;;

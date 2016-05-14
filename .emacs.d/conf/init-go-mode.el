@@ -2,9 +2,10 @@
 (require-package 'go-mode)
 (require-package 'company-go)
 
-(setenv "GOPATH" "~/Code/go")
+(setenv "GOPATH" "/Users/cosmtrek/Code/go")
 (setenv "GOROOT" "/usr/local/go")
 (load "$GOPATH/src/golang.org/x/tools/cmd/oracle/oracle.el")
+(setq gofmt-command "goimports")
 
 (add-hook 'go-mode-hook
           (lambda ()
