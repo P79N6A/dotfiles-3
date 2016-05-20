@@ -32,35 +32,12 @@
 (after-load 'page-break-lines
   (push 'ruby-mode page-break-lines-modes))
 
-;;; Inferior ruby
-(require-package 'inf-ruby)
-(require-package 'ruby-compilation)
-
-(after-load 'ruby-mode
-  (let ((m ruby-mode-map))
-    (define-key m [S-f7] 'ruby-compilation-this-buffer)
-    (define-key m [f7] 'ruby-compilation-this-test)))
-
-(after-load 'ruby-compilation
-  (defalias 'rake 'ruby-compilation-rake))
-
-;;; Robe
-(require-package 'robe)
-(after-load 'ruby-mode
-  (add-hook 'ruby-mode-hook 'robe-mode))
-(eval-after-load 'company
-  '(push 'company-robe company-backends))
-
 ;; Customise highlight-symbol to not highlight do/end/class/def etc.
 (defun sanityinc/suppress-ruby-mode-keyword-highlights ()
   "Suppress highlight-symbol for do/end etc."
   (set (make-local-variable 'highlight-symbol-ignore-list)
        (list (concat "\\_<" (regexp-opt '("do" "end")) "\\_>"))))
 (add-hook 'ruby-mode-hook 'sanityinc/suppress-ruby-mode-keyword-highlights)
-
-;;; ri support
-(require-package 'yari)
-(defalias 'ri 'yari)
 
 ;;; YAML
 (require-package 'yaml-mode)
