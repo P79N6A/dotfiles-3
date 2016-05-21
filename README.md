@@ -1,9 +1,11 @@
 Feel free to borrow my config files:)
 
-## Steps
+# Install
+
+Install homebrew in the beginning.
 
 ```
-brew install git zsh tmux
+brew install git zsh tmux vim
 brew install emacs --with-cocoa
 ```
 
@@ -20,10 +22,14 @@ Remember to switch shell from bash to zsh `chsh -s /bin/zsh USENAME`
 
 Run `make install` to install.
 
-## Emacs extra
+## Emacs
 
 First install golang environment, then download go tools.
 
 ```
 go get golang.org/x/tools/cmd/oracle
 ```
+
+## Zsh
+
+Private environment variables set in `~/.zshenv`.

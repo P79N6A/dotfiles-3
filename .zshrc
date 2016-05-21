@@ -2,11 +2,9 @@
 source ~/.zplug/zplug
 
 zplug "sindresorhus/pure"
-zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-syntax-highlighting"
-zplug "plugins/git", from:oh-my-zsh, if:"which git"
-zplug "unixorn/git-extra-commands"
-zplug "tj/n", do:"make install"
+zplug "zsh-users/zsh-history-substring-search"
+zplug "tj/n", hook-build:"make install"
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -14,23 +12,19 @@ if ! zplug check --verbose; then
         echo; zplug install
     fi
 fi
-
 zplug load --verbose
 
 ################################### Settings ###################################
+set -o emacs
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export TERM=xterm-256color
 
-################################### Rbenv ######################################
-# eval "$(rbenv init -)"
-
-################################### Rvm ######################################
-# install ruby comment out the zplug section
+################################### Rvm ########################################
 source ~/.rvm/scripts/rvm
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
-################################## #Alias ######################################
+################################### Alias ######################################
 alias d=docker
 alias denv='eval "$(docker-machine env dev)"'
 alias e='/usr/local/Cellar/emacs/24.5/bin/emacsclient -t'
@@ -45,3 +39,4 @@ alias wttr='curl -4 wttr.in/Beijing'
 alias cow='cow -color -request'
 alias ip='curl ip.cn'
 alias vi='/usr/local/bin/vim' # brew install vim
+alias cleards="find ~ -name '*.DS_Store' -type f -delete && echo 'ALL .DS_STORE FILES RECURSIVELY REMOVED'"

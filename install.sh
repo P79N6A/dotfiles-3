@@ -8,6 +8,7 @@ TMUX=".tmux.conf"
 GIT_IGNORE=".gitignore"
 GIT_CONFIG=".gitconfig"
 GEMRC=".gemrc"
+VIM=".vimrc"
 EMACS=".emacs.d"
 
 # $1 $2 absolute path
@@ -31,7 +32,7 @@ link_emacs() {
 }
 
 # single file
-CONFIG_FILES="$ZSHRC $TMUX $GIT_IGNORE $GIT_CONFIG $GEMRC"
+CONFIG_FILES="$ZSHRC $TMUX $GIT_IGNORE $GIT_CONFIG $GEMRC $VIM"
 for FILE in $CONFIG_FILES; do
     link_to "$PWD/$FILE" "$HOME/$FILE"
 done
