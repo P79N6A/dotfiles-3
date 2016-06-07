@@ -75,6 +75,7 @@
 
 (require 'init-compile)
 (require 'init-ruby-mode)
+(require 'init-c-mode)
 (require 'init-go-mode)
 (require 'init-javascript)
 (require 'init-html)

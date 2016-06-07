@@ -45,6 +45,10 @@
 ;;; Slim
 (require-package 'slim-mode)
 
+;;; Rvm
+(require 'rvm)
+(rvm-use-default)
+
 ;;; ERB
 (require-package 'mmm-mode)
 (defun sanityinc/ensure-mmm-erb-loaded ()

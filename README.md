@@ -1,26 +1,10 @@
 Feel free to borrow my config files:)
 
-# Install
+# Setup && Sync
 
-Install homebrew in the beginning.
+`make setup` to setup develop environment and install necessary tools.
 
-```
-brew install git zsh tmux vim
-brew install emacs --with-cocoa
-```
-
-[zplug](https://github.com/b4b4r07/zplug) `git clone https://github.com/b4b4r07/zplug ~/.zplug`
-
-[pure theme](https://github.com/sindresorhus/pure)
-
-```
-n stable # install node stable version
-npm install --global pure-prompt # pure theme
-```
-
-Remember to switch shell from bash to zsh `chsh -s /bin/zsh USENAME`
-
-Run `make install` to install.
+`make sync` to sync dotfiles.
 
 ## Emacs
 
@@ -30,6 +14,22 @@ First install golang environment, then download go tools.
 go get golang.org/x/tools/cmd/oracle
 ```
 
+## Vim
+
+Install vim plugin manager vim-plug:
+
+```
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+```
+
 ## Zsh
+
+Install [pure](https://github.com/sindresorhus/pure) theme:
+
+```
+n stable # install node stable version
+npm install --global pure-prompt # pure theme
+```
 
 Private environment variables set in `~/.zshenv`.

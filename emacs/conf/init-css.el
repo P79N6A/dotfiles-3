@@ -4,9 +4,6 @@
     (add-hook hook 'rainbow-mode)))
 
 (setq css-indent-offset 2)
-(add-hook 'css-mode-hook
-          (lambda ()
-            (linum-mode 1)))
 
 ;;; Embedding in html
 (require-package 'mmm-mode)

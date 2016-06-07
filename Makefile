@@ -1,3 +1,5 @@
-install:
-	chmod a+x install.sh
-	./install.sh
+sync:
+	sh sync.sh
+
+setup:
+	sh setup.sh

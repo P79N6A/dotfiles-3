@@ -60,11 +60,11 @@
               initial-major-mode 'text-mode           ; Text mode, not Elisp.
               make-backup-files nil                   ; No "backup~" files or "#autosave#" files.
               auto-save-default nil
-							auto-revert-mode t                      ; Revert file automatically.
+              auto-revert-mode t                      ; Revert file automatically.
               size-indication-mode t                  ; Display the size of the buffer.
               column-number-mode t                    ; Display the current column number
               require-final-newline t                 ; Ensure a newline at the end if there isn't already one there.
-              indent-tabs-mode t                      ; Always indent using spaces, never tabs.
+              indent-tabs-mode nil                    ; Always indent using spaces, never tabs.
               default-tab-width 8                     ; Set tab width to 2.
               standard-indent  2                      ; Set standard indent to 2 rather that 4.
               delete-selection-mode t                 ; Replace the active region just by typing text.
@@ -74,12 +74,12 @@
               indicate-buffer-boundaries nil
               read-file-name-completion-ignore-case t ; Ignore case when using completion for file names.
               line-move-visual t                      ; Move around lines based on how they are displayed.
-							make-pointer-invisible t                ; Hide the mouse while typing.
+              make-pointer-invisible t                ; Hide the mouse while typing.
               find-file-visit-truename nil            ; It's okay to refer to a file by a symlink.
               kill-whole-line t                       ; Kill whole line and newline with C-k if at beginning of line.
               set-mark-command-repeat-pop t           ; Cycle through the mark ring.
-							tags-revert-without-query t             ; Reload TAGS automatically.
-							apropos-sort-by-scores t)               ; Sort results by relevancy.
+              tags-revert-without-query t             ; Reload TAGS automatically.
+              apropos-sort-by-scores t)               ; Sort results by relevancy.
 
 ;; Disable prompts. http://www.masteringemacs.org/article/disabling-prompts-emacs
 (fset 'yes-or-no-p 'y-or-n-p)

@@ -14,12 +14,6 @@ Plug 'mhinz/vim-startify'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'Shougo/unite.vim'
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'Shougo/unite-outline'
-Plug 'Shougo/neomru.vim'
-Plug 'tsukkee/unite-tag'
-Plug 'cosmtrek/vim-fastunite'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'terryma/vim-multiple-cursors'
@@ -27,9 +21,6 @@ Plug 'tpope/vim-surround'
 Plug 'tmhedberg/matchit'
 Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/NERDCommenter'
-Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
-Plug 'junegunn/vim-emoji'
-Plug 'ekalinin/Dockerfile.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -231,10 +222,3 @@ let g:airline#extensions#whitespace#enabled = 0
 " Gitgutter
 set updatetime=300
 let g:gitgutter_sign_column_always = 1
-" Emoji
-if emoji#available()
-    let g:gitgutter_sign_added = emoji#for('frog')
-    let g:gitgutter_sign_modified = emoji#for('dog')
-    let g:gitgutter_sign_removed = emoji#for('pig')
-    let g:gitgutter_sign_modified_removed = emoji#for('cat')
-endif
