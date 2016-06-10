@@ -41,3 +41,4 @@ alias cow='cow -color -request'
 alias ip='curl ip.cn'
 alias vi='/usr/local/bin/vim' # brew install vim
 alias cleards="find ~ -name '*.DS_Store' -type f -delete && echo 'ALL .DS_STORE FILES RECURSIVELY REMOVED'"
+alias rctags='ctags --recurse=yes --tag-relative=yes --exclude=.git --exclude=log --exclude=tmp --exclude=doc --exclude=deps --languages=ruby'

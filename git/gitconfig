@@ -30,11 +30,12 @@
 	dad = !"git show-branch -a | ack '\\*' | ack -v \"`git rev-parse --abbrev-ref HEAD`\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//'"
 	wc = whatchanged
 	uncommit = reset --soft HEAD^
+    unadd = reset --hard HEAD^
 	lg = log -p
 	type = cat-file -t
 	dump = cat-file -p
 	# Pretty log output
-	hist = log --graph --pretty=format:'%Cred%h%Creset %s%C(yellow)%d%Creset %Cgreen(%cr)%Creset [%an]' --abbrev-commit --date=relative
+	hs = log --graph --pretty=format:'%Cred%h%Creset %s%C(yellow)%d%Creset %Cgreen(%cr)%Creset [%an]' --abbrev-commit --date=relative
 [color]
 	# Use colors in Git commands that are capable of colored output when outputting to the terminal
 	ui = auto

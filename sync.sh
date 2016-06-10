@@ -39,4 +39,6 @@ link_emacs() {
 for d in git vim zsh tmux rubygem; do
     link ${d}
 done
-link_emacs
+
+# Back to Vim :)
+# link_emacs
