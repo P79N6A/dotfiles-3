@@ -17,10 +17,15 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'Valloric/YouCompleteMe'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
 Plug 'tmhedberg/matchit'
 Plug 'jiangmiao/auto-pairs'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/NERDCommenter'
+Plug 'fatih/vim-go'
+Plug 'vim-ruby/vim-ruby'
 call plug#end()
 
 filetype plugin indent on
@@ -54,7 +59,7 @@ set gcr=a:blinkon0
 set noerrorbells
 set novisualbell
 set t_vb=
-set number
+set relativenumber
 set numberwidth=2
 set scrolloff=5
 set mouse=a
@@ -75,11 +80,6 @@ if has("win16") || has("win32")
 	set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 else
 	set wildignore+=.git\*,.hg\*,.svn\*
-endif
-
-if has('conceal')
-    set conceallevel=1
-    set listchars+=conceal:Δ
 endif
 
 if has("gui_running")
@@ -139,7 +139,7 @@ map <silent> <leader><cr> :noh<cr>
 nnoremap P :pu<cr>
 
 " Close the current buffer and move to the previous one
-nnoremap <leader>bq :bp <BAR> bd #<cr>
+nnoremap <esc>b :bp <BAR> bd #<cr>
 
 " Useful mappings for managing tabs
 map te :tabedit<space>
@@ -213,12 +213,58 @@ highlight ExtraWhitespace ctermbg=Red
 autocmd BufWritePre * StripWhitespace
 
 " Airline
-let g:airline_theme='tomorrow'
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#wordcount#enabled = 0
 let g:airline#extensions#whitespace#enabled = 0
+
+" Fugitive
+autocmd BufReadPost fugitive://* set bufhidden=delete
 
 " Gitgutter
 set updatetime=300
 let g:gitgutter_sign_column_always = 1
+
+" CtrlP
+nnoremap <esc>. :CtrlPTag<cr>
+nnoremap <leader>b :CtrlPBuffer<cr>
+nnoremap <leader>r :CtrlPMRU<cr>
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \}
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+let g:ctrlp_max_depth = 10
+
+" YCM
+set completeopt-=preview
+let g:ycm_filetype_blacklist = {
+      \ 'tagbar' : 1,
+      \ 'qf' : 1,
+      \ 'notes' : 1,
+      \ 'markdown' : 1,
+      \ 'unite' : 1,
+      \ 'text' : 1,
+      \ 'vimwiki' : 1,
+      \ 'pandoc' : 1,
+      \ 'infolog' : 1,
+      \ 'mail' : 1
+      \}
+
+" Go
+let g:go_fmt_autosave = 1
+let g:go_fmt_fail_silently = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_interfaces = 1
+let g:go_highlight_build_constraints = 1
+let g:go_fmt_command = "goimports"
+"let g:syntastic_go_checkers = ['go', 'golint']
+"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go']   }
+let g:go_list_type = "quickfix"
+let g:golang_goroot="/usr/local/go"
+au FileType go nmap <Leader>gs <Plug>(go-implements)
+au FileType go nmap <Leader>gi <Plug>(go-info)
