@@ -5,6 +5,8 @@
 "   curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 "     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 "
+" How to debug?
+"   vim --startup-time vim.log
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
 
@@ -20,12 +22,16 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'Valloric/YouCompleteMe'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-ragtag'
+Plug 'othree/html5.vim'
+Plug 'mattn/emmet-vim'
 Plug 'tmhedberg/matchit'
 Plug 'jiangmiao/auto-pairs'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/NERDCommenter'
 Plug 'fatih/vim-go'
 Plug 'vim-ruby/vim-ruby'
+Plug 'pangloss/vim-javascript'
 call plug#end()
 
 filetype plugin indent on
@@ -109,15 +115,11 @@ inoremap jk <esc>
 
 augroup MyAutoCmd
     autocmd!
-augroup END
-
-" Disable paste
-autocmd MyAutoCmd InsertLeave *
+    " Disable paste
+    autocmd InsertLeave *
       \ if &paste | setlocal nopaste | echo 'nopaste' | endif |
       \ if &l:diff | diffupdate | endif
-
-" Update diff
-autocmd MyAutoCmd InsertLeave * if &l:diff | diffupdate | endif
+augroup END
 
 nnoremap <leader>w :w!<cr>
 nnoremap <leader>q :q<cr>
@@ -187,19 +189,22 @@ set smarttab
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
-autocmd BufRead,BufNewFile *.c set ts=4 sw=4 et sts=4
-autocmd BufRead,BufNewFile *.h set ts=4 sw=4 et sts=4
-autocmd BufRead,BufNewFile *.m set ts=4 sw=4 et sts=4
-autocmd BufRead,BufNewFile *.py set ts=4 sw=4 et sts=4
-autocmd BufRead,BufNewFile *.js set ts=4 sw=4 et sts=4
-autocmd BufRead,BufNewFile *.css set ts=2 sw=2 et sts=2
-autocmd BufRead,BufNewFile *.scss set ts=2 sw=2 et sts=2
-autocmd BufRead,BufNewFile *.html set ts=4 sw=4 et sts=4
-autocmd BufRead,BufNewFile *.xml set ts=4 sw=4 et sts=4 ai
-autocmd BufRead,BufNewFile *.json set ts=4 sw=4 et sts=4 ai
-autocmd BufRead,BufNewFile *.rb set ts=2 sw=2 et sts=2 ai
-autocmd BufRead,BufNewFile *.go set ts=4 sw=4 ai
-autocmd BufRead,BufNewFile *.yml set ts=2 sw=2 et sts=2 ai
+augroup spacetab
+    autocmd!
+    autocmd BufRead,BufNewFile *.c set ts=4 sw=4 et sts=4
+    autocmd BufRead,BufNewFile *.h set ts=4 sw=4 et sts=4
+    autocmd BufRead,BufNewFile *.m set ts=4 sw=4 et sts=4
+    autocmd BufRead,BufNewFile *.py set ts=4 sw=4 et sts=4
+    autocmd BufRead,BufNewFile *.js set ts=4 sw=4 et sts=4
+    autocmd BufRead,BufNewFile *.css set ts=2 sw=2 et sts=2
+    autocmd BufRead,BufNewFile *.scss set ts=2 sw=2 et sts=2
+    autocmd BufRead,BufNewFile *.html set ts=2 sw=2 et sts=2
+    autocmd BufRead,BufNewFile *.xml set ts=4 sw=4 et sts=4 ai
+    autocmd BufRead,BufNewFile *.json set ts=4 sw=4 et sts=4 ai
+    autocmd BufRead,BufNewFile *.rb set ts=2 sw=2 et sts=2 ai
+    autocmd BufRead,BufNewFile *.go set ts=4 sw=4 ai
+    autocmd BufRead,BufNewFile *.yml set ts=2 sw=2 et sts=2 ai
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin settings
@@ -210,7 +215,7 @@ let g:startify_custom_header =
 
 " vim-better-whitespace
 highlight ExtraWhitespace ctermbg=Red
-autocmd BufWritePre * StripWhitespace
+autocmd MyAutoCmd BufWritePre * StripWhitespace
 
 " Airline
 let g:airline_powerline_fonts = 1
@@ -219,7 +224,7 @@ let g:airline#extensions#wordcount#enabled = 0
 let g:airline#extensions#whitespace#enabled = 0
 
 " Fugitive
-autocmd BufReadPost fugitive://* set bufhidden=delete
+autocmd MyAutoCmd BufReadPost fugitive://* set bufhidden=delete
 
 " Gitgutter
 set updatetime=300
@@ -262,9 +267,14 @@ let g:go_highlight_structs = 1
 let g:go_highlight_interfaces = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
-"let g:syntastic_go_checkers = ['go', 'golint']
-"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go']   }
 let g:go_list_type = "quickfix"
 let g:golang_goroot="/usr/local/go"
-au FileType go nmap <Leader>gs <Plug>(go-implements)
-au FileType go nmap <Leader>gi <Plug>(go-info)
+autocmd FileType go nmap <Leader>gs <Plug>(go-implements)
+autocmd FileType go nmap <Leader>gi <Plug>(go-info)
+
+" Vue
+autocmd BufRead,BufNewFile *.vue set filetype=html
+
+" Emmet
+let g:user_emmet_install_global = 0
+autocmd FileType html,css,eruby EmmetInstall
