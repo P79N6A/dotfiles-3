@@ -56,7 +56,7 @@
 	name = Rick Yu
 	email = cosmtrek@gmail.com
 [core]
-	editor = emacsclient
+	editor = vim
 	excludesfile = /Users/cosmtrek/.gitignore
 	quotepath = false
 	autocrlf = input
@@ -90,3 +90,5 @@
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
 	required = true
+[diff]
+	compactionHeuristic = true

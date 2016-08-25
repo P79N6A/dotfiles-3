@@ -19,6 +19,8 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'majutsushi/tagbar'
 Plug 'Valloric/YouCompleteMe'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -29,9 +31,11 @@ Plug 'tmhedberg/matchit'
 Plug 'jiangmiao/auto-pairs'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/NERDCommenter'
+Plug 'SirVer/ultisnips'
 Plug 'fatih/vim-go'
 Plug 'vim-ruby/vim-ruby'
 Plug 'pangloss/vim-javascript'
+Plug 'ternjs/tern_for_vim', { 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'npm install' }
 call plug#end()
 
 filetype plugin indent on
@@ -195,10 +199,11 @@ augroup spacetab
     autocmd BufRead,BufNewFile *.h set ts=4 sw=4 et sts=4
     autocmd BufRead,BufNewFile *.m set ts=4 sw=4 et sts=4
     autocmd BufRead,BufNewFile *.py set ts=4 sw=4 et sts=4
-    autocmd BufRead,BufNewFile *.js set ts=4 sw=4 et sts=4
+    autocmd BufRead,BufNewFile *.js set ts=2 sw=2 et sts=4
     autocmd BufRead,BufNewFile *.css set ts=2 sw=2 et sts=2
     autocmd BufRead,BufNewFile *.scss set ts=2 sw=2 et sts=2
     autocmd BufRead,BufNewFile *.html set ts=2 sw=2 et sts=2
+    autocmd BufRead,BufNewFile *.vue set ts=2 sw=2 et sts=2
     autocmd BufRead,BufNewFile *.xml set ts=4 sw=4 et sts=4 ai
     autocmd BufRead,BufNewFile *.json set ts=4 sw=4 et sts=4 ai
     autocmd BufRead,BufNewFile *.rb set ts=2 sw=2 et sts=2 ai
@@ -217,6 +222,11 @@ let g:startify_custom_header =
 highlight ExtraWhitespace ctermbg=Red
 autocmd MyAutoCmd BufWritePre * StripWhitespace
 
+" NERDCommenter
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDTrimTrailingWhitespace = 1
+
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 0
@@ -227,8 +237,12 @@ let g:airline#extensions#whitespace#enabled = 0
 autocmd MyAutoCmd BufReadPost fugitive://* set bufhidden=delete
 
 " Gitgutter
-set updatetime=300
+set updatetime=500
 let g:gitgutter_sign_column_always = 1
+let g:gitgutter_sign_added = "++"
+let g:gitgutter_sign_removed = "--"
+let g:gitgutter_sign_modified = "**"
+let g:gitgutter_sign_modified_removed = "**"
 
 " CtrlP
 nnoremap <esc>. :CtrlPTag<cr>
@@ -245,6 +259,7 @@ let g:ctrlp_max_depth = 10
 
 " YCM
 set completeopt-=preview
+let g:ycm_python_binary_path = 'python3'
 let g:ycm_filetype_blacklist = {
       \ 'tagbar' : 1,
       \ 'qf' : 1,
@@ -258,12 +273,22 @@ let g:ycm_filetype_blacklist = {
       \ 'mail' : 1
       \}
 
+" UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger="<CR>"
+
+" NERDTree
+nmap <F9> :NERDTreeToggle<CR>
+
+" Tagbar
+nmap <F8> :TagbarToggle<CR>
+
 " Go
 let g:go_fmt_autosave = 1
-let g:go_fmt_fail_silently = 1
+" let g:go_fmt_fail_silently = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
 let g:go_highlight_interfaces = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
@@ -271,10 +296,14 @@ let g:go_list_type = "quickfix"
 let g:golang_goroot="/usr/local/go"
 autocmd FileType go nmap <Leader>gs <Plug>(go-implements)
 autocmd FileType go nmap <Leader>gi <Plug>(go-info)
+autocmd FileType go nmap <F5> <Plug>(go-build)
+autocmd FileType go nmap <F6> <Plug>(go-run)
+autocmd FileType go nmap <F7> <Plug>(go-test)
 
 " Vue
 autocmd BufRead,BufNewFile *.vue set filetype=html
 
 " Emmet
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,eruby EmmetInstall
+let g:user_emmet_leader_key='<C-\>'
+autocmd FileType html,css,eruby,vue EmmetInstall
