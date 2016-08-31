@@ -32,6 +32,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/NERDCommenter'
 Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'fatih/vim-go'
 Plug 'vim-ruby/vim-ruby'
 Plug 'pangloss/vim-javascript'
@@ -274,17 +275,17 @@ let g:ycm_filetype_blacklist = {
       \}
 
 " UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger="<CR>"
+let g:UltiSnipsExpandTrigger="<F2>"
 
 " NERDTree
-nmap <F9> :NERDTreeToggle<CR>
+nmap <F10> :NERDTreeToggle<CR>
 
 " Tagbar
-nmap <F8> :TagbarToggle<CR>
+nmap <F12> :TagbarToggle<CR>
 
 " Go
 let g:go_fmt_autosave = 1
-" let g:go_fmt_fail_silently = 1
+let g:go_fmt_fail_silently = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
