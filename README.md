@@ -6,15 +6,6 @@ Feel free to borrow my config files:)
 
 `make sync` to sync dotfiles.
 
-## Emacs
-
-First install golang environment, then download go tools.
-
-```
-go get golang.org/x/tools/cmd/oracle
-go get golang.org/x/tools/cmd/guru
-```
-
 ## Vim
 
 Install vim plugin manager vim-plug:

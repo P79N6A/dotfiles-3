@@ -12,6 +12,8 @@ set nocompatible
 
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/seoul256.vim'
+Plug 'dracula/vim'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'mhinz/vim-startify'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -70,6 +72,7 @@ set gcr=a:blinkon0
 set noerrorbells
 set novisualbell
 set t_vb=
+set number
 set relativenumber
 set numberwidth=2
 set scrolloff=5
@@ -111,6 +114,7 @@ if has("gui_running")
 else
     let g:seoul256_background = 233
     colorscheme seoul256
+    " color dracula
     set background=dark
 endif
 
@@ -199,7 +203,7 @@ augroup spacetab
     autocmd BufRead,BufNewFile *.c set ts=4 sw=4 et sts=4
     autocmd BufRead,BufNewFile *.h set ts=4 sw=4 et sts=4
     autocmd BufRead,BufNewFile *.m set ts=4 sw=4 et sts=4
-    autocmd BufRead,BufNewFile *.py set ts=4 sw=4 et sts=4
+    autocmd BufRead,BufNewFile *.py set ts=4 sw=4 et sts=4 autoindent shiftround
     autocmd BufRead,BufNewFile *.js set ts=2 sw=2 et sts=4
     autocmd BufRead,BufNewFile *.css set ts=2 sw=2 et sts=2
     autocmd BufRead,BufNewFile *.scss set ts=2 sw=2 et sts=2
@@ -236,6 +240,9 @@ let g:airline#extensions#whitespace#enabled = 0
 
 " Fugitive
 autocmd MyAutoCmd BufReadPost fugitive://* set bufhidden=delete
+
+" Git
+autocmd Filetype gitcommit setlocal spell textwidth=72
 
 " Gitgutter
 set updatetime=500

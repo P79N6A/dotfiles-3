@@ -36,6 +36,13 @@
 	dump = cat-file -p
 	# Pretty log output
 	hs = log --graph --pretty=format:'%Cred%h%Creset %s%C(yellow)%d%Creset %Cgreen(%cr)%Creset [%an]' --abbrev-commit --date=relative
+    # code review for go
+    change = codereview change
+    gofmt = codereview gofmt
+    mail = codereview mail
+    pending = codereview pending
+    submit = codereview submit
+    sync = codereview sync
 [color]
 	# Use colors in Git commands that are capable of colored output when outputting to the terminal
 	ui = auto
@@ -70,7 +77,8 @@
 	commitencoding = utf-8
 [http]
 	proxy = http://127.0.0.1:8964
-	postBuffer = 1048576000
+	postBuffer = 524288000
+	cookiefile = /Users/cosmtrek/.gitcookies
 [https]
 	proxy = http://127.0.0.1:8964
 [branch]
@@ -92,3 +100,5 @@
 	required = true
 [diff]
 	compactionHeuristic = true
+[http "https://gopkg.in"]
+	followRedirects = true

@@ -1,5 +1,5 @@
 sync:
-	sh sync.sh
+	./hack/sync.sh
 
 setup:
-	sh setup.sh
+	./hack/setup.sh

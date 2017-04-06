@@ -5,6 +5,7 @@ zplug "sindresorhus/pure"
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "tj/n", hook-build:"make install"
+zplug "b4b4r07/enhancd", use:init.sh
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -30,22 +31,16 @@ export PYENV_ROOT=$HOME/.pyenv
 export PATH="$PYENV_ROOT/bin:$PYENV_ROOT/shims:/usr/texbin:$PATH"
 eval "$(pyenv init -)"
 export WORKON_HOME=$HOME/.virtualenvs
-source $HOME/.pyenv/versions/2.7.12/bin/virtualenvwrapper.sh
+source $HOME/.pyenv/versions/3.6.0/bin/virtualenvwrapper.sh
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
+# autoenv
+source $HOME/.pyenv/versions/3.6.0/bin/activate.sh
 
 ################################## Scala #######################################
 export PATH=$PATH:/Users/cosmtrek/Infrasture/scala-2.10.5/bin
 
 ################################### Alias ######################################
-alias d=docker
-alias denv='eval "$(docker-machine env dev)"'
-alias e='/usr/local/Cellar/emacs/24.5/bin/emacsclient -t'
-alias eui='/usr/local/Cellar/emacs/24.5/bin/emacsclient -n'
-# alias py='python3'
 alias g=git
-alias gff='git flow feature'
-alias gfr='git flow release'
-alias gfh='git flow hotfix'
 alias pg='postgres -D /usr/local/var/postgres'
 alias rds=redis-server
 alias wttr='curl -4 wttr.in/Beijing'
@@ -56,3 +51,22 @@ alias cleards="find ~ -name '*.DS_Store' -type f -delete && echo 'ALL .DS_STORE 
 alias rtag='ctags --recurse=yes --tag-relative=yes --exclude=.git --exclude=log --exclude=tmp --exclude=doc --exclude=deps --languages=ruby'
 alias ptag='ctags --recurse=yes --tag-relative=yes --exclude=.git --exclude=log --exclude=tmp --exclude=doc --exclude=deps --languages=python'
 alias 🐸="echo 'Too young too simple, always naive!' | cowsay -f bud-frogs"
+alias lookbusy='cat /dev/urandom | hexdump -C | grep --color "ca fe"'
+alias lip='ipconfig getifaddr en0'
+alias octave='octave --no-gui'
+
+alias en0="echo $(ifconfig en0 | grep netmask | awk '{print $2}')"
+
+function proxy() {
+    export http_proxy=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964
+    export https_proxy=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964
+}
+
+function vagrant_proxy() {
+    export VAGRANT_HTTP_PROXY=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964
+    export VAGRANT_HTTPS_PROXY=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964
+}
+
+################################## Docker #####################################
+alias d=docker
+alias dctr="docker run --rm -i --privileged -e http_proxy=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964 -e https_proxy=$http_proxy -v "$(pwd)/.:/go/src/github.com/docker/docker/." -v "$(pwd)/.git:/go/src/github.com/docker/docker/.git" -v "dockerdev-go-pkg-cache-gopath:/go/pkg" -v "dockerdev-go-pkg-cache-goroot-linux_amd64_netgo:/usr/local/go/pkg/linux_amd64_netgo" -t "docker-dev:read-source" bash"

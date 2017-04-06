@@ -1,6 +1,5 @@
 #!/bin/bash
 #
-# Setup development
 
 # Homebrew
 `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
@@ -12,7 +11,6 @@ for cmd in ack ssh-copy-id openssl git cmake git-flow the_silver_searcher cowsay
     `${brew} install ${cmd}`
 done
 
-`${brew} install emacs --with-cocoa`
 `${brew} install lua luajit python3`
 `${brew} install vim --with-lua --with-luajit --with-python3`
 
