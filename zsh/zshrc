@@ -3,9 +3,7 @@ source ~/.zplug/zplug
 
 zplug "sindresorhus/pure"
 zplug "zsh-users/zsh-syntax-highlighting"
-zplug "zsh-users/zsh-history-substring-search"
 zplug "tj/n", hook-build:"make install"
-zplug "b4b4r07/enhancd", use:init.sh
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -13,31 +11,37 @@ if ! zplug check --verbose; then
         echo; zplug install
     fi
 fi
-zplug load --verbose
+zplug load
 
 ################################### Settings ###################################
 set -o emacs
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# locale
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export TERM=xterm-256color
 
-################################### Rvm ########################################
-source ~/.rvm/scripts/rvm
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+# editor
+export EDITOR='vi'
 
-################################## Pyenv #######################################
-export PYENV_ROOT=$HOME/.pyenv
-export PATH="$PYENV_ROOT/bin:$PYENV_ROOT/shims:/usr/texbin:$PATH"
-eval "$(pyenv init -)"
-export WORKON_HOME=$HOME/.virtualenvs
-source $HOME/.pyenv/versions/3.6.0/bin/virtualenvwrapper.sh
-export PYTHON_CONFIGURE_OPTS="--enable-framework"
-# autoenv
-source $HOME/.pyenv/versions/3.6.0/bin/activate.sh
+# http_proxy
+export http_proxy='http://0.0.0.0:8964'
+export https_proxy='http://0.0.0.0:8964'
+export no_proxy='localhost,127.0.0.1,127.0.1.1'
 
-################################## Scala #######################################
-export PATH=$PATH:/Users/cosmtrek/Infrasture/scala-2.10.5/bin
+################################### PATH #######################################
+# go
+export GOROOT='/usr/local/go'
+export GOPATH="$HOME/Dropbox/Code/go"
+export PATH="/usr/local/go/bin:$GOPATH/bin:$PATH"
+
+# miniconda3 for python
+export PATH="$HOME/.miniconda3/bin:$PATH"
+
+# java
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+export MAVEN_OPTS="-Xms128m -Xmx512m -XX:MaxPermSize=512M"
 
 ################################### Alias ######################################
 alias g=git
@@ -50,23 +54,16 @@ alias vi='/usr/local/bin/vim' # brew install vim
 alias cleards="find ~ -name '*.DS_Store' -type f -delete && echo 'ALL .DS_STORE FILES RECURSIVELY REMOVED'"
 alias rtag='ctags --recurse=yes --tag-relative=yes --exclude=.git --exclude=log --exclude=tmp --exclude=doc --exclude=deps --languages=ruby'
 alias ptag='ctags --recurse=yes --tag-relative=yes --exclude=.git --exclude=log --exclude=tmp --exclude=doc --exclude=deps --languages=python'
-alias 🐸="echo 'Too young too simple, always naive!' | cowsay -f bud-frogs"
 alias lookbusy='cat /dev/urandom | hexdump -C | grep --color "ca fe"'
 alias lip='ipconfig getifaddr en0'
-alias octave='octave --no-gui'
-
 alias en0="echo $(ifconfig en0 | grep netmask | awk '{print $2}')"
-
-function proxy() {
-    export http_proxy=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964
-    export https_proxy=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964
-}
-
-function vagrant_proxy() {
-    export VAGRANT_HTTP_PROXY=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964
-    export VAGRANT_HTTPS_PROXY=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964
-}
 
 ################################## Docker #####################################
 alias d=docker
 alias dctr="docker run --rm -i --privileged -e http_proxy=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964 -e https_proxy=$http_proxy -v "$(pwd)/.:/go/src/github.com/docker/docker/." -v "$(pwd)/.git:/go/src/github.com/docker/docker/.git" -v "dockerdev-go-pkg-cache-gopath:/go/pkg" -v "dockerdev-go-pkg-cache-goroot-linux_amd64_netgo:/usr/local/go/pkg/linux_amd64_netgo" -t "docker-dev:read-source" bash"
+
+################################# Funciton ####################################
+function proxy() {
+    export http_proxy=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964
+    export https_proxy=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964
+}

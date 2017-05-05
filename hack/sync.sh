@@ -20,7 +20,6 @@ link() {
     done
 }
 
-# Link files
-for d in git vim zsh tmux rubygem; do
+for d in git vim zsh tmux iterm; do
     link ${d}
 done
