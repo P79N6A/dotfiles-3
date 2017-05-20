@@ -14,6 +14,8 @@ fi
 zplug load
 
 ################################### Settings ###################################
+eval "$(thefuck --alias)"
+
 set -o emacs
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
@@ -36,8 +38,8 @@ export PATH="/usr/local/sbin:$PATH"
 
 # go
 export GOROOT='/usr/local/go'
-export GOPATH="$HOME/Dropbox/Code/go"
-export PATH="/usr/local/go/bin:$GOPATH/bin:$PATH"
+export GOPATH="$HOME/.go:$HOME/Dropbox/Code/go"
+export PATH="/usr/local/go/bin:$HOME/.go/bin:$HOME/Dropbox/Code/go/bin:$PATH"
 
 # miniconda3 for python
 export PATH="$HOME/.miniconda3/bin:$PATH"
@@ -65,8 +67,16 @@ alias en0="echo $(ifconfig en0 | grep netmask | awk '{print $2}')"
 alias d=docker
 alias dctr="docker run --rm -i --privileged -e http_proxy=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964 -e https_proxy=$http_proxy -v "$(pwd)/.:/go/src/github.com/docker/docker/." -v "$(pwd)/.git:/go/src/github.com/docker/docker/.git" -v "dockerdev-go-pkg-cache-gopath:/go/pkg" -v "dockerdev-go-pkg-cache-goroot-linux_amd64_netgo:/usr/local/go/pkg/linux_amd64_netgo" -t "docker-dev:read-source" bash"
 
-################################# Funciton ####################################
+################################# Function ####################################
 function proxy() {
     export http_proxy=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964
     export https_proxy=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964
+}
+
+function igo() {
+    cd $HOME/Dropbox/Code/go/src/github.com/cosmtrek/$1
+}
+
+function blog() {
+    cd $HOME/Dropbox/Docs/blog
 }
