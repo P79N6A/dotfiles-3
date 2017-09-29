@@ -105,7 +105,7 @@ if has("gui_running")
 	set guioptions-=b
 	set guioptions-=m   "menubar
 	set t_Co=256
-    set guifont=Source\ Code\ Pro\ for\ Powerline:h12
+    set guifont=Hack\ Powerline:h12
 endif
 
 " color options
@@ -253,7 +253,7 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 
 " Gitgutter
 set updatetime=500
-let g:gitgutter_sign_column_always = 1
+set signcolumn=yes
 let g:gitgutter_sign_added = "++"
 let g:gitgutter_sign_removed = "--"
 let g:gitgutter_sign_modified = "**"
