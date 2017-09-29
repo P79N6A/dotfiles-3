@@ -59,6 +59,7 @@ https://conda.io/miniconda.html
 
 `cp ./idea/idea.vmoptions ~/Library/Preferences/IntelliJIdea<VERSION>` and restart the IDE
 
-## Allow key-repeat for macOS
+## Modify macOS preferences
 
-`defaults write -g KeyRepeat -int 0`
+* `defaults write -g KeyRepeat -int 0`
+* `defaults write com.apple.screencapture location ~/Documents/screenshots && killall SystemUIServer`
