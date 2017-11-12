@@ -77,5 +77,6 @@ python3 install.py --clang-completer --gocode-completer --racer-completer
 
 ## Modify macOS preferences
 
+* `defaults write -g ApplePressAndHoldEnabled -bool false`
 * `defaults write -g KeyRepeat -int 0`
 * `defaults write com.apple.screencapture location ~/Screenshots && killall SystemUIServer`
