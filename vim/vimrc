@@ -105,7 +105,7 @@ if has("gui_running")
 	set guioptions-=b
 	set guioptions-=m   "menubar
 	set t_Co=256
-    set guifont=Hack\ Powerline:h12
+    set guifont=Hack:h12
 endif
 
 " color options
