@@ -44,14 +44,14 @@ export PATH="$GOROOT/bin:$HOME/.go/bin:$HOME/Code/go/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # miniconda3 for python
-export PATH="$HOME/.miniconda3/bin:$PATH"
+export PATH="$HOME/.conda/bin:$PATH"
 
 # java
 export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 export MAVEN_OPTS="-Xms128m -Xmx512m -XX:MaxPermSize=512M"
 
 # n-install
-export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
+export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
 
 ################################### Alias ######################################
 alias g=git

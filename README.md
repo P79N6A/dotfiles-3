@@ -19,22 +19,25 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ```
 
-### YouCompleteMe
-
-After installing go and rust, build YouCompleteMe...
-
-```
-cd ~/.vim/plugged/YouCompleteMe
-python install.py --clang-completer --gocode-completer --racer-completer
-```
-
 ## Zsh
+
+First use Zsh in iTerm2:
+
+```
+chsh -s `which zsh`
+```
+
+Then download zplug for managing plugs:
+
+```
+curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
+```
 
 Install [pure](https://github.com/sindresorhus/pure) theme:
 
 ```
-n stable # install node stable version
-npm install --global pure-prompt # pure theme
+curl -L https://git.io/n-install | N_PREFIX=~/.n bash
+npm install -g pure-prompt # pure theme
 ```
 
 Private environment variables set in `~/.zshenv`.
@@ -55,6 +58,19 @@ https://conda.io/miniconda.html
 
 `curl https://sh.rustup.rs -sSf | sh`
 
+## Java
+
+See http://www.oracle.com/technetwork/java/javase/downloads/index.html
+
+## YouCompleteMe
+
+After installing go and rust, build YouCompleteMe...
+
+```
+cd ~/.vim/plugged/YouCompleteMe
+python3 install.py --clang-completer --gocode-completer --racer-completer
+```
+
 ## Modify IDEA vmoptions
 
 `cp ./idea/idea.vmoptions ~/Library/Preferences/IntelliJIdea<VERSION>` and restart the IDE
@@ -62,4 +78,4 @@ https://conda.io/miniconda.html
 ## Modify macOS preferences
 
 * `defaults write -g KeyRepeat -int 0`
-* `defaults write com.apple.screencapture location ~/Documents/screenshots && killall SystemUIServer`
+* `defaults write com.apple.screencapture location ~/Screenshots && killall SystemUIServer`

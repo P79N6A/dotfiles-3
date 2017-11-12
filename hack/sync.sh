@@ -23,7 +23,8 @@ link() {
 link_karabinar() {
     cd ${ROOT}
     printf "${GREEN}+ ${WHITE}linking $PWD/karabiner to ~/.config\n"
-    ln -s $PWD/karabiner ~/.config
+    mkdir -p ~/.config/
+    ln -s $PWD/karabiner ~/.config/
     # https://pqrs.org/osx/karabiner/document.html#configuration-file-path
     launchctl kickstart -k gui/`id -u`/org.pqrs.karabiner.karabiner_console_user_server
 }
