@@ -68,7 +68,7 @@ After installing go and rust, build YouCompleteMe...
 
 ```
 cd ~/.vim/plugged/YouCompleteMe
-python3 install.py --clang-completer --gocode-completer --racer-completer
+/usr/local/bin/python3 install.py --clang-completer --gocode-completer --racer-completer
 ```
 
 ## Modify IDEA vmoptions
