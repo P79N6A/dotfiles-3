@@ -41,7 +41,12 @@ export PATH="$GOROOT/bin:$HOME/.go/bin:$HOME/Code/go/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # miniconda3 for python
-export PATH="$HOME/.conda/bin:$PATH"
+# export PATH="$HOME/.conda/bin:$PATH"
+
+# pyenv
+eval "$(pyenv init -)"
+# pipenv
+export PIPENV_VENV_IN_PROJECT="1"
 
 # java
 export JAVA_HOME=`/usr/libexec/java_home -v 1.8`

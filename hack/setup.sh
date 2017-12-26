@@ -5,7 +5,7 @@ brew=/usr/local/bin/brew
 # Homebrew
 `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
 
-`${brew} install ack ssh-copy-id openssl git cmake git-flow cowsay tmux ctags tree wget fortune thefuck tldr luajit python3 mas`
+`${brew} install ack ssh-copy-id openssl git cmake git-flow cowsay tmux ctags tree wget fortune thefuck tldr luajit pyenv python3 mas`
 
 `${brew} cask install keepingyouawake`
 
