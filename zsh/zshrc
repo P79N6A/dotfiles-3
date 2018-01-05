@@ -55,6 +55,10 @@ export MAVEN_OPTS="-Xms128m -Xmx512m -XX:MaxPermSize=512M"
 # n-install
 export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
 
+# GNU tools
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/m4/bin:$PATH"
+
 # brew
 export PATH="/usr/local/sbin:$PATH"
 
