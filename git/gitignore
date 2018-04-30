@@ -83,10 +83,10 @@ DerivedData
 cmake-build-debug/
 
 # Maven
-log/
 target/
 
 # Tag
+.tags
 tags
 GTAGS
 GPATH

@@ -6,37 +6,51 @@
 "     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 "
 " How to debug?
-"   vim --startup-time vim.log
+"   vim --startuptime vim.log
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
 
 call plug#begin('~/.vim/plugged')
-Plug 'mhinz/vim-startify'
+" themes, ui, etc.
 Plug 'junegunn/seoul256.vim'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
+" editing
 Plug 'terryma/vim-multiple-cursors'
-Plug 'junegunn/vim-easy-align'
-Plug 'skywind3000/asyncrun.vim'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'Valloric/YouCompleteMe'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'majutsushi/tagbar'
-Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-ragtag'
-Plug 'tmhedberg/matchit'
 Plug 'jiangmiao/auto-pairs'
+Plug 'junegunn/vim-easy-align'
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-syntax'
+Plug 'kana/vim-textobj-function'
+Plug 'sgur/vim-textobj-parameter'
+Plug 'bps/vim-textobj-python'
+" searching
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'justinmk/vim-dirvish'
+" tools
+Plug 'tpope/vim-fugitive'
+Plug 'skywind3000/asyncrun.vim'
+Plug 'simnalamburt/vim-mundo'
+Plug 'ludovicchabant/vim-gutentags'
+" languages, autocomplete, etc.
+Plug 'w0rp/ale'
+Plug 'Valloric/YouCompleteMe'
 Plug 'fatih/vim-go'
 Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'solarnz/thrift.vim'
+Plug 'uarun/vim-protobuf'
 Plug 'othree/html5.vim'
 Plug 'mattn/emmet-vim'
-Plug 'scrooloose/NERDCommenter'
 Plug 'pangloss/vim-javascript'
+Plug 'scrooloose/NERDCommenter'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'editorconfig/editorconfig-vim'
 call plug#end()
 
 filetype plugin indent on
@@ -74,12 +88,30 @@ set number
 set relativenumber
 set numberwidth=2
 set scrolloff=5
-set mouse=a
+set mouse-=a
 set ffs=unix,dos,mac
 set lazyredraw
 set ttyfast
 set pumheight=20
 set timeout timeoutlen=5000 ttimeoutlen=100
+set cursorline
+
+if has("gui_running")
+	set guioptions-=T   "toolbar
+	set guioptions-=r   "scrollbar
+	set guioptions-=L
+	set guioptions-=e
+	set guioptions-=b
+	set guioptions-=m   "menubar
+	set t_Co=256
+    set guifont=Hack:h12
+endif
+
+" Colorscheme
+let g:seoul256_srgb = 1
+let g:seoul256_background = 235
+colo seoul256
+set background=light
 
 function! s:SID_PREFIX() abort
     return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
@@ -94,30 +126,9 @@ else
 	set wildignore+=.git\*,.hg\*,.svn\*
 endif
 
-if has("gui_running")
-	set guioptions-=T   "toolbar
-	set guioptions-=r   "scrollbar
-	set guioptions-=L
-	set guioptions-=e
-	set guioptions-=b
-	set guioptions-=m   "menubar
-	set t_Co=256
-    set guifont=Hack:h12
-endif
-
-" color options
-if has("gui_running")
-    colorscheme seoul256
-    set background=light
-else
-    let g:seoul256_background = 233
-    colorscheme seoul256
-    set background=dark
-endif
-
+" Key
 let mapleader = "\<Space>"
 nnoremap <space> <nop>
-inoremap jk <esc>
 
 augroup MyAutoCmd
     autocmd!
@@ -147,9 +158,6 @@ map <silent> <leader><cr> :noh<cr>
 " Paste in a new line
 nnoremap P :pu<cr>
 
-" Close the current buffer and move to the previous one
-nnoremap <esc>b :bp <BAR> bd #<cr>
-
 " Useful mappings for managing tabs
 map te :tabedit<space>
 map th :tab<space>help<space>
@@ -164,10 +172,6 @@ set winwidth=30
 set winheight=1
 set previewheight=8
 set helpheight=12
-
-" Resize windows
-nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
-nnoremap <silent> - :exe "resize " . (winheight(0) * 2/3)<CR>
 
 " Smart way to move between windows
 " <C-W>r swap the only two windows
@@ -189,7 +193,7 @@ map <leader>pp :setlocal paste!<cr>
 command W w !sudo tee % > /dev/null
 
 " ctags path
-set tags=./tags,tags;
+set tags=./.tags;,.tags
 
 set expandtab
 set smarttab
@@ -223,10 +227,6 @@ vnoremap <C-S-X> <ESC>`.``gvp``P
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Startify
-let g:startify_custom_header =
-  \ map(split(system('fortune | cowsay'), '\n'), '"   ". v:val')
-
 " vim-better-whitespace
 highlight ExtraWhitespace ctermbg=Red
 autocmd MyAutoCmd BufWritePre * StripWhitespace
@@ -242,63 +242,92 @@ let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#wordcount#enabled = 0
 let g:airline#extensions#whitespace#enabled = 0
 
+" Signify
+set signcolumn=yes
+let g:signify_vcs_list = ['git']
+
 " Fugitive
 autocmd MyAutoCmd BufReadPost fugitive://* set bufhidden=delete
 
 " Git
-autocmd Filetype gitcommit setlocal spell textwidth=72
-
-" Gitgutter
-set updatetime=500
-set signcolumn=yes
-let g:gitgutter_sign_added = "++"
-let g:gitgutter_sign_removed = "--"
-let g:gitgutter_sign_modified = "**"
-let g:gitgutter_sign_modified_removed = "**"
-
-" CtrlP
-nnoremap <esc>. :CtrlPTag<cr>
-nnoremap <leader>e :CtrlPBuffer<cr>
-nnoremap <leader>r :CtrlPMRU<cr>
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ 'link': 'some_bad_symbolic_links',
-  \}
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-let g:ctrlp_max_depth = 10
-
-" YCM
-set completeopt-=preview
-let g:ycm_python_binary_path = 'python3'
-let g:ycm_filetype_blacklist = {
-      \ 'tagbar' : 1,
-      \ 'qf' : 1,
-      \ 'notes' : 1,
-      \ 'markdown' : 1,
-      \ 'unite' : 1,
-      \ 'text' : 1,
-      \ 'vimwiki' : 1,
-      \ 'pandoc' : 1,
-      \ 'infolog' : 1,
-      \ 'mail' : 1
-      \}
-
-" UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger="<F2>"
+autocmd Filetype gitcommit setlocal spell textwidth=78
 
 " NERDTree
 nmap <F10> :NERDTreeToggle<CR>
 
-" Tagbar
-nmap <F12> :TagbarToggle<CR>
+" UndoTree
+if has("persistent_undo")
+    set undodir=~/.undodir/
+    set undofile
+endif
 
 " Easy Align
-" Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+" gutentags
+let g:gutentags_project_root = ['.root', '.git', '.svn', '.hg', '.project']
+let g:gutentags_ctags_tagfile = '.tags'
+let s:vim_tags = expand('~/.cache/tags')
+let g:gutentags_cache_dir = s:vim_tags
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+if !isdirectory(s:vim_tags)
+    silent! call mkdir(s:vim_tags, 'p')
+endif
+
+" ale
+let g:ale_completion_delay = 500
+let g:ale_echo_delay = 20
+let g:ale_lint_delay = 500
+let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_insert_leave = 1
+let g:ale_list_window_size = 5
+let g:airline#extensions#ale#enabled = 1
+let g:ale_linters_explicit = 1
+let g:ale_linters = {
+    \ 'go': ['goimports', 'gometalinter', 'staticcheck'],
+    \ 'python': ['flake8'],
+    \ 'make': ['checkmake'],
+    \ 'thrift': ['thrift'],
+    \}
+
+" YCM
+set completeopt-=preview
+let g:ycm_show_diagnostics_ui = 0
+let g:ycm_server_log_level = 'info'
+let g:ycm_min_num_identifier_candidate_chars = 2
+let g:ycm_complete_in_strings=1
+let g:ycm_python_binary_path = 'python'
+let g:ycm_filetype_blacklist = {
+    \ 'tagbar' : 1,
+    \ 'qf' : 1,
+    \ 'notes' : 1,
+    \ 'markdown' : 1,
+    \ 'unite' : 1,
+    \ 'text' : 1,
+    \ 'vimwiki' : 1,
+    \ 'pandoc' : 1,
+    \ 'infolog' : 1,
+    \ 'mail' : 1
+    \}
+" TODO: let g:ycm_filetype_whitelist
+let g:ycm_semantic_triggers =  {
+    \ 'c,cpp,python,go,javascript,lua': ['re!\w{2}'],
+    \}
+" GoTo
+nnoremap <C-]> :YcmCompleter GoTo<CR>
+
+" LeaderF
+let g:Lf_WorkingDirectoryMode = 'Ac'
+let g:Lf_CacheDirectory = expand('~/.vim/cache')
+let g:Lf_WindowHeight = 0.30
+let g:Lf_StlColorscheme = 'powerline'
+let g:Lf_StlSeparator = { 'left': '', 'right': '' }
+let g:Lf_ShowRelativePath = 0
+let g:Lf_HideHelp = 1
 
 " Go
 let g:go_fmt_autosave = 1
@@ -311,12 +340,9 @@ let g:go_highlight_interfaces = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 let g:go_list_type = "quickfix"
-let g:golang_goroot="/usr/local/opt/go/libexec"
+let g:golang_goroot="/usr/local/go"
 autocmd FileType go nmap <Leader>gs <Plug>(go-implements)
 autocmd FileType go nmap <Leader>gi <Plug>(go-info)
-autocmd FileType go nmap <F5> <Plug>(go-build)
-autocmd FileType go nmap <F6> <Plug>(go-run)
-autocmd FileType go nmap <F7> <Plug>(go-test)
 
 " Vue
 autocmd BufRead,BufNewFile *.vue set filetype=html

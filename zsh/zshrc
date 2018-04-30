@@ -1,8 +1,21 @@
 ################################### Zplug ######################################
+
+# Check if zplug is installed
+if [[ ! -d ~/.zplug ]]; then
+    git clone https://github.com/zplug/zplug ~/.zplug
+    source ~/.zplug/init.zsh && zplug update --self
+fi
+
 source ~/.zplug/init.zsh
 
-zplug "sindresorhus/pure"
+zplug "mafredri/zsh-async"
+zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "ael-code/zsh-colored-man-pages"
+zplug "supercrabtree/k"
+zplug "b4b4r07/enhancd", use:init.sh
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -40,11 +53,6 @@ export PATH="$GOROOT/bin:$HOME/.go/bin:$HOME/Code/go/bin:$PATH"
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"
 
-# miniconda3 for python
-# export PATH="$HOME/.conda/bin:$PATH"
-
-# pyenv
-eval "$(pyenv init -)"
 # pipenv
 export PIPENV_VENV_IN_PROJECT="1"
 
@@ -68,18 +76,13 @@ alias pg='postgres -D /usr/local/var/postgres'
 alias rds=redis-server
 alias wttr='curl -4 wttr.in/Beijing'
 alias ip='curl ip.cn'
-alias vi='/Applications/MacVim.app/Contents/bin/vim' # download macvim dmg and install
-alias mvim='/Applications/MacVim.app/Contents/bin/mvim' # download macvim dmg and install
 alias less='less --LONG-PROMPT --LINE-NUMBERS --ignore-case --QUIET'
 alias cleards="find ~ -name '*.DS_Store' -type f -delete && echo 'ALL .DS_STORE FILES RECURSIVELY REMOVED'"
 alias ptag='ctags --recurse=yes --tag-relative=yes --exclude=.git --exclude=log --exclude=tmp --exclude=doc --exclude=deps --languages=python'
 alias lookbusy='cat /dev/urandom | hexdump -C | grep --color "ca fe"'
 alias lip='ipconfig getifaddr en0'
 alias en0="echo $(ifconfig en0 | grep netmask | awk '{print $2}')"
-
-################################## Docker #####################################
 alias d=docker
-alias dctr="docker run --rm -i --privileged -e http_proxy=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964 -e https_proxy=$http_proxy -v "$(pwd)/.:/go/src/github.com/docker/docker/." -v "$(pwd)/.git:/go/src/github.com/docker/docker/.git" -v "dockerdev-go-pkg-cache-gopath:/go/pkg" -v "dockerdev-go-pkg-cache-goroot-linux_amd64_netgo:/usr/local/go/pkg/linux_amd64_netgo" -t "docker-dev:read-source" bash"
 
 ################################# Function ####################################
 function proxy() {
@@ -89,6 +92,10 @@ function proxy() {
 
 function igo() {
     cd $HOME/Code/go/src/github.com/cosmtrek/$1
+}
+
+function gg() {
+    cd $HOME/Code/go/src/github.com/$1
 }
 
 function gop() {

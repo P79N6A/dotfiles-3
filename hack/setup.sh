@@ -3,8 +3,9 @@
 # Homebrew
 `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
 
-`brew install ssh-copy-id openssl ack cmake git git-flow cowsay tmux ctags tree wget fortune thefuck tldr luajit pyenv python3 mas`
-
+`brew install ssh-copy-id openssl ack cmake git git-flow cowsay tmux tree wget fortune tldr luajit python3 mas`
+`brew install vim --with-luajit --with-override-system-vi`
+`brew install --HEAD universal-ctags/universal-ctags/universal-ctags`
 `brew cask install keepingyouawake`
 
 # install gnu tools
