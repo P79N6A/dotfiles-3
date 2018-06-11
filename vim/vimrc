@@ -13,8 +13,7 @@ set nocompatible
 call plug#begin('~/.vim/plugged')
 " themes, ui, etc.
 Plug 'junegunn/seoul256.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'cosmtrek/lightline.vim'
 Plug 'mhinz/vim-signify'
 " editing
 Plug 'terryma/vim-multiple-cursors'
@@ -32,14 +31,21 @@ Plug 'bps/vim-textobj-python'
 " searching
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'justinmk/vim-dirvish'
 " tools
 Plug 'tpope/vim-fugitive'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'simnalamburt/vim-mundo'
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'Yggdroot/indentLine'
+Plug 'junegunn/vim-slash'
+Plug 'osyo-manga/vim-over'
+Plug 'MattesGroeger/vim-bookmarks'
+Plug 'Shougo/echodoc.vim'
 " languages, autocomplete, etc.
 Plug 'w0rp/ale'
+Plug 'SirVer/ultisnips'
 Plug 'Valloric/YouCompleteMe'
 Plug 'fatih/vim-go'
 Plug 'Vimjas/vim-python-pep8-indent'
@@ -80,7 +86,6 @@ set incsearch
 set magic
 set showmatch
 set history=100
-set gcr=a:blinkon0
 set noerrorbells
 set novisualbell
 set t_vb=
@@ -93,8 +98,9 @@ set ffs=unix,dos,mac
 set lazyredraw
 set ttyfast
 set pumheight=20
-set timeout timeoutlen=5000 ttimeoutlen=100
+set timeout timeoutlen=1000 ttimeoutlen=100
 set cursorline
+set gcr=a:blinkon0
 
 if has("gui_running")
 	set guioptions-=T   "toolbar
@@ -111,7 +117,6 @@ endif
 let g:seoul256_srgb = 1
 let g:seoul256_background = 235
 colo seoul256
-set background=light
 
 function! s:SID_PREFIX() abort
     return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
@@ -150,6 +155,10 @@ inoremap <C-n> <down>
 inoremap <C-p> <up>
 inoremap <C-a> <home>
 inoremap <C-e> <end>
+cnoremap <C-n> <down>
+cnoremap <C-p> <up>
+cnoremap <C-a> <home>
+cnoremap <C-e> <end>
 " Remap Vim 0 to first non-blank character
 nnoremap 0 ^
 nnoremap e $
@@ -185,9 +194,11 @@ map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " Copy & paste to system clipboard
 set clipboard=unnamed
-
-" Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
+" No clipboard
+nnoremap <leader>y :w! /tmp/vclipboard<cr>
+vnoremap <leader>y :w! /tmp/vclipboard<cr>
+nnoremap <leader>p :r /tmp/vclipboard<cr>
+vnoremap <leader>p :r /tmp/vclipboard<cr>
 
 " :W sudo saves the file
 command W w !sudo tee % > /dev/null
@@ -236,12 +247,6 @@ let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
 let g:NERDTrimTrailingWhitespace = 1
 
-" Airline
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 0
-let g:airline#extensions#wordcount#enabled = 0
-let g:airline#extensions#whitespace#enabled = 0
-
 " Signify
 set signcolumn=yes
 let g:signify_vcs_list = ['git']
@@ -265,6 +270,69 @@ endif
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
+" lightline
+let g:lightline = {
+    \ 'colorscheme': 'seoul256',
+    \ 'active': {
+    \   'left': [[ 'mode', 'paste' ],
+    \            [ 'gitbranch', 'readonly', 'filename' ],
+    \            [ 'linter_warnings', 'linter_errors' ]],
+    \   'right': [[ 'lineinfo' ], [ 'percent' ],
+    \             [ 'filetype', 'fileencoding', 'fileformat' ]],
+    \ },
+    \ 'component_function': {
+    \   'gitbranch': 'fugitive#head',
+    \   'filename': 'LightlineFilename',
+    \ },
+    \ 'component_expand': {
+    \   'linter_warnings': 'LightlineAleWarnings',
+    \   'linter_errors': 'LightlineAleErrors',
+    \ },
+    \ 'component_type': {
+    \   'linter_warnings': 'warning',
+    \   'linter_errors': 'error',
+    \ },
+    \}
+
+function! LightlineFilename()
+  let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+  let modified = &modified ? ' +' : ''
+  return filename . modified
+endfunction
+
+" lightline-ale
+augroup lightline#ale
+  autocmd!
+  autocmd User ALEJobStarted call lightline#update()
+  autocmd User ALELintPost call lightline#update()
+  autocmd User ALEFixPost call lightline#update()
+augroup END
+
+function! LightlineAleWarnings() abort
+  if !LightlineAleLinted()
+    return ''
+  endif
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:all_non_errors == 0 ? '' : printf('W%d', all_non_errors)
+endfunction
+
+function! LightlineAleErrors() abort
+  if !LightlineAleLinted()
+    return ''
+  endif
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  return l:all_errors == 0 ? '' : printf('E%d', all_errors)
+endfunction
+
+function! LightlineAleLinted() abort
+  return get(g:, 'ale_enabled', 0) == 1
+    \ && getbufvar(bufnr(''), 'ale_linted', 0) > 0
+    \ && ale#engine#IsCheckingBuffer(bufnr('')) == 0
+endfunction
+
 " gutentags
 let g:gutentags_project_root = ['.root', '.git', '.svn', '.hg', '.project']
 let g:gutentags_ctags_tagfile = '.tags'
@@ -285,7 +353,6 @@ let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
 let g:ale_list_window_size = 5
-let g:airline#extensions#ale#enabled = 1
 let g:ale_linters_explicit = 1
 let g:ale_linters = {
     \ 'go': ['goimports', 'gometalinter', 'staticcheck'],
@@ -317,17 +384,30 @@ let g:ycm_filetype_blacklist = {
 let g:ycm_semantic_triggers =  {
     \ 'c,cpp,python,go,javascript,lua': ['re!\w{2}'],
     \}
-" GoTo
 nnoremap <C-]> :YcmCompleter GoTo<CR>
+
+" UltiSnips
+" TODO: link to my dotfiles
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/snips']
+let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsExpandTrigger = '<C-j>'
+let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+nnoremap <Leader>ue :UltiSnipsEdit<CR>
 
 " LeaderF
 let g:Lf_WorkingDirectoryMode = 'Ac'
 let g:Lf_CacheDirectory = expand('~/.vim/cache')
 let g:Lf_WindowHeight = 0.30
 let g:Lf_StlColorscheme = 'powerline'
-let g:Lf_StlSeparator = { 'left': '', 'right': '' }
+let g:Lf_StlSeparator = {'left': '', 'right': ''}
 let g:Lf_ShowRelativePath = 0
 let g:Lf_HideHelp = 1
+nnoremap <Leader>lf :LeaderfFunction!<CR>
+nnoremap <Leader>lm :LeaderfMru<CR>
+
+" indent line
+let g:indentLine_char = '¦'
 
 " Go
 let g:go_fmt_autosave = 1
@@ -341,8 +421,10 @@ let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 let g:go_list_type = "quickfix"
 let g:golang_goroot="/usr/local/go"
-autocmd FileType go nmap <Leader>gs <Plug>(go-implements)
-autocmd FileType go nmap <Leader>gi <Plug>(go-info)
+autocmd FileType go nmap <Leader>gi <Plug>(go-implements)
+autocmd FileType go nmap <Leader>ga <Plug>(go-alternate)
+autocmd FileType go nmap <Leader>gd <Plug>(go-describe)
+autocmd FileType go nmap <Leader>gv <Plug>(go-info)
 
 " Vue
 autocmd BufRead,BufNewFile *.vue set filetype=html
