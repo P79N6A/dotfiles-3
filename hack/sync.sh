@@ -29,8 +29,16 @@ link_karabinar() {
     launchctl kickstart -k gui/`id -u`/org.pqrs.karabiner.karabiner_console_user_server
 }
 
+link_alacritty() {
+    cd ${ROOT}
+    printf "${GREEN}+ ${WHITE}linking $PWD/alacritty to ~/.config\n"
+    mkdir -p ~/.config/alacritty/
+    ln -s $PWD/alacritty/alacritty.yml ~/.config/alacritty/
+}
+
 for d in git vim zsh tmux iterm; do
     link ${d}
 done
 
 link_karabinar
+link_alacritty

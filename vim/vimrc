@@ -53,7 +53,6 @@ Plug 'solarnz/thrift.vim'
 Plug 'uarun/vim-protobuf'
 Plug 'othree/html5.vim'
 Plug 'mattn/emmet-vim'
-Plug 'pangloss/vim-javascript'
 Plug 'scrooloose/NERDCommenter'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'editorconfig/editorconfig-vim'
@@ -354,12 +353,15 @@ let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
 let g:ale_list_window_size = 5
 let g:ale_linters_explicit = 1
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
 let g:ale_linters = {
-    \ 'go': ['goimports', 'gometalinter', 'staticcheck'],
+    \ 'go': ['gometalinter'],
     \ 'python': ['flake8'],
     \ 'make': ['checkmake'],
     \ 'thrift': ['thrift'],
     \}
+let g:ale_go_gometalinter_options = '--fast --enable=staticcheck --enable=goimports'
 
 " YCM
 set completeopt-=preview
@@ -425,6 +427,9 @@ autocmd FileType go nmap <Leader>gi <Plug>(go-implements)
 autocmd FileType go nmap <Leader>ga <Plug>(go-alternate)
 autocmd FileType go nmap <Leader>gd <Plug>(go-describe)
 autocmd FileType go nmap <Leader>gv <Plug>(go-info)
+
+" Rust
+let g:rustfmt_autosave = 1
 
 " Vue
 autocmd BufRead,BufNewFile *.vue set filetype=html

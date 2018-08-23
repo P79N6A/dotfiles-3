@@ -16,6 +16,7 @@ zplug "zsh-users/zsh-autosuggestions"
 zplug "ael-code/zsh-colored-man-pages"
 zplug "supercrabtree/k"
 zplug "b4b4r07/enhancd", use:init.sh
+zplug "tj/git-extras", as:command, use:"bin/git-*", hook-build:"make install"
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -83,6 +84,7 @@ alias lookbusy='cat /dev/urandom | hexdump -C | grep --color "ca fe"'
 alias lip='ipconfig getifaddr en0'
 alias en0="echo $(ifconfig en0 | grep netmask | awk '{print $2}')"
 alias d=docker
+alias gr='grep --color -n -E'
 
 ################################# Function ####################################
 function proxy() {

@@ -69,6 +69,7 @@
 	autocrlf = false
 	safecrlf = true
 	whitespace = cr-at-eol
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [push]
 	default = current
 [gui]
