@@ -43,16 +43,15 @@ brew install m4
 # brew install gdb  # gdb requires further actions to make it work. See `brew info gdb`.
 
 # common tools
-brew install git
+brew install ssh-copy-id openssl gnupg cowsay
+brew install git tmux ack ripgrep tree jq fzf
 brew install vim --with-luajit --with-override-system-vi
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
-brew install tmux
-brew install ssh-copy-id openssl gnupg cowsay
-brew install ack ripgrep tree
 
 # programming languages
 brew install python elixir ocaml go
 curl https://sh.rustup.rs -sSf | sh
+brew install yarn --without-node
 
 # vim plug
 e_header "Downloading vim plug"
@@ -63,6 +62,10 @@ e_header "Tuning macOS defaults..."
 defaults write -g ApplePressAndHoldEnabled -bool false
 defaults write -g KeyRepeat -int 0
 defaults write com.apple.screencapture location ~/Screenshots && killall SystemUIServer
+
+# fonts
+brew tap caskroom/fonts
+brew cask install font-fira-code
 
 e_header "Happy hacking~"
 

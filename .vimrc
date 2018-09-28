@@ -28,6 +28,7 @@ Plug 'kana/vim-textobj-syntax'
 Plug 'kana/vim-textobj-function'
 Plug 'sgur/vim-textobj-parameter'
 Plug 'bps/vim-textobj-python'
+Plug 'RRethy/vim-illuminate'
 " searching
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -35,6 +36,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'justinmk/vim-dirvish'
 " tools
 Plug 'tpope/vim-fugitive'
+Plug 'sodapopcan/vim-twiggy'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'simnalamburt/vim-mundo'
 Plug 'ludovicchabant/vim-gutentags'
@@ -109,7 +111,7 @@ if has("gui_running")
 	set guioptions-=b
 	set guioptions-=m   "menubar
 	set t_Co=256
-    set guifont=Hack:h12
+    set guifont=Fira\ Code:h14
 endif
 
 " Colorscheme
@@ -171,6 +173,9 @@ map te :tabedit<space>
 map th :tab<space>help<space>
 map <leader>, :tabprev<cr>
 map <leader>. :tabnext<cr>
+
+" tools
+map json! :%!python<space>-m<space>json.tool<cr>
 
 " https://robots.thoughtbot.com/vim-splits-move-faster-and-more-naturally
 " More natural split opening
@@ -234,6 +239,9 @@ vnoremap <C-S-X> <ESC>`.``gvp``P
 " Toggle quickfix window rapidly
 :noremap <F9> :call asyncrun#quickfix_toggle(8)<cr>
 
+" Terminal
+:tnoremap <Esc> <C-\><C-n>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -258,6 +266,7 @@ autocmd Filetype gitcommit setlocal spell textwidth=78
 
 " NERDTree
 nmap <F10> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
 
 " UndoTree
 if has("persistent_undo")

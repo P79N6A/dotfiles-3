@@ -1,5 +1,4 @@
 ################################### Zplug ######################################
-
 # Check if zplug is installed
 if [[ ! -d ~/.zplug ]]; then
     git clone https://github.com/zplug/zplug ~/.zplug
@@ -27,8 +26,6 @@ fi
 zplug load
 
 ################################### Settings ###################################
-eval "$(thefuck --alias)"
-
 set -o emacs
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
@@ -38,12 +35,15 @@ export LANG=en_US.UTF-8
 export TERM=xterm-256color
 
 # editor
-export EDITOR='/Applications/MacVim.app/Contents/bin/vim'
+export EDITOR='vim'
 
 # http_proxy
 export http_proxy='http://0.0.0.0:8964'
 export https_proxy='http://0.0.0.0:8964'
 export no_proxy='localhost,127.0.0.1,127.0.1.1'
+
+# fzf
+export FZF_DEFAULT_OPTS='--height 20% --layout=reverse --border'
 
 ################################### PATH #######################################
 # go
@@ -73,33 +73,29 @@ export PATH="/usr/local/sbin:$PATH"
 
 ################################### Alias ######################################
 alias g=git
+alias v=vim
 alias pg='postgres -D /usr/local/var/postgres'
-alias rds=redis-server
-alias wttr='curl -4 wttr.in/Beijing'
-alias ip='curl ip.cn'
 alias less='less --LONG-PROMPT --LINE-NUMBERS --ignore-case --QUIET'
 alias cleards="find ~ -name '*.DS_Store' -type f -delete && echo 'ALL .DS_STORE FILES RECURSIVELY REMOVED'"
-alias ptag='ctags --recurse=yes --tag-relative=yes --exclude=.git --exclude=log --exclude=tmp --exclude=doc --exclude=deps --languages=python'
-alias lookbusy='cat /dev/urandom | hexdump -C | grep --color "ca fe"'
-alias lip='ipconfig getifaddr en0'
 alias en0="echo $(ifconfig en0 | grep netmask | awk '{print $2}')"
-alias d=docker
 alias gr='grep --color -n -E'
 
 ################################# Function ####################################
-function proxy() {
-    export http_proxy=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964
-    export https_proxy=http://$(ifconfig en0 | grep netmask | awk '{print $2}'):8964
+function md() {
+	mkdir -p "$@" && cd "$@"
 }
 
-function igo() {
-    cd $HOME/Code/go/src/github.com/cosmtrek/$1
+function f() {
+	find . -name "$1" 2>&1 | grep -v 'Permission denied'
 }
 
-function gg() {
-    cd $HOME/Code/go/src/github.com/$1
+function t() {
+    tmux a -t $1
 }
 
-function gop() {
-    export GOPATH=$(pwd)
+function rgg() {
+    rg $1 -g '!{vendor,thrift_gen,clients}' -tgo
 }
+
+# iterm2
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
