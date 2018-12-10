@@ -77,11 +77,11 @@
 [i18n]
 	commitencoding = utf-8
 [http]
-	proxy = http://127.0.0.1:8964
+	proxy = http://127.0.0.1:6152
 	postBuffer = 524288000
 	cookiefile = /Users/cosmtrek/.gitcookies
 [https]
-	proxy = http://127.0.0.1:8964
+	proxy = http://127.0.0.1:6152
 [branch]
 	autosetuprebase = always
 [rerere]

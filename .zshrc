@@ -38,14 +38,16 @@ export TERM=xterm-256color
 export EDITOR='vim'
 
 # http_proxy
-export http_proxy='http://0.0.0.0:8964'
-export https_proxy='http://0.0.0.0:8964'
+export http_proxy='http://0.0.0.0:6152' https_proxy='http://0.0.0.0:6152'
 export no_proxy='localhost,127.0.0.1,127.0.1.1'
 
 # fzf
 export FZF_DEFAULT_OPTS='--height 20% --layout=reverse --border'
 
 ################################### PATH #######################################
+# conda, may conflict with YCM
+export PATH="$HOME/.conda/bin:$PATH"
+
 # go
 export GOROOT='/usr/local/opt/go/libexec'
 export GOPATH="$HOME/.go:$HOME/Code/go"
@@ -54,12 +56,14 @@ export PATH="$GOROOT/bin:$HOME/.go/bin:$HOME/Code/go/bin:$PATH"
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# flutter
+export PATH="$HOME/Code/flutter/bin:$PATH"
+
 # pipenv
 export PIPENV_VENV_IN_PROJECT="1"
 
 # java
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-export MAVEN_OPTS="-Xms128m -Xmx512m -XX:MaxPermSize=512M"
+# export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 
 # n-install
 export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).

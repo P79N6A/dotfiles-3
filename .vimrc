@@ -36,7 +36,6 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'justinmk/vim-dirvish'
 " tools
 Plug 'tpope/vim-fugitive'
-Plug 'sodapopcan/vim-twiggy'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'simnalamburt/vim-mundo'
 Plug 'ludovicchabant/vim-gutentags'
@@ -50,11 +49,13 @@ Plug 'w0rp/ale'
 Plug 'SirVer/ultisnips'
 Plug 'Valloric/YouCompleteMe'
 Plug 'fatih/vim-go'
+Plug 'rust-lang/rust.vim'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'solarnz/thrift.vim'
 Plug 'uarun/vim-protobuf'
 Plug 'othree/html5.vim'
 Plug 'mattn/emmet-vim'
+Plug 'pangloss/vim-javascript'
 Plug 'scrooloose/NERDCommenter'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'editorconfig/editorconfig-vim'
@@ -135,6 +136,7 @@ endif
 " Key
 let mapleader = "\<Space>"
 nnoremap <space> <nop>
+nnoremap <leader>w :w!<cr>
 
 augroup MyAutoCmd
     autocmd!
@@ -144,9 +146,6 @@ augroup MyAutoCmd
       \ if &l:diff | diffupdate | endif
     autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
 augroup END
-
-nnoremap <leader>w :w!<cr>
-nnoremap <leader>q :q<cr>
 
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
@@ -173,9 +172,6 @@ map te :tabedit<space>
 map th :tab<space>help<space>
 map <leader>, :tabprev<cr>
 map <leader>. :tabnext<cr>
-
-" tools
-map json! :%!python<space>-m<space>json.tool<cr>
 
 " https://robots.thoughtbot.com/vim-splits-move-faster-and-more-naturally
 " More natural split opening
@@ -237,10 +233,7 @@ augroup END
 vnoremap <C-S-X> <ESC>`.``gvp``P
 
 " Toggle quickfix window rapidly
-:noremap <F9> :call asyncrun#quickfix_toggle(8)<cr>
-
-" Terminal
-:tnoremap <Esc> <C-\><C-n>
+:noremap <leader>q :call asyncrun#quickfix_toggle(8)<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin settings
@@ -265,8 +258,7 @@ autocmd MyAutoCmd BufReadPost fugitive://* set bufhidden=delete
 autocmd Filetype gitcommit setlocal spell textwidth=78
 
 " NERDTree
-nmap <F10> :NERDTreeToggle<CR>
-let NERDTreeShowHidden=1
+nmap ee :NERDTreeToggle<CR>
 
 " UndoTree
 if has("persistent_undo")
@@ -303,7 +295,7 @@ let g:lightline = {
     \}
 
 function! LightlineFilename()
-  let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+  let filename = expand('%:t') !=# '' ? expand('%') : '[No Name]'
   let modified = &modified ? ' +' : ''
   return filename . modified
 endfunction
@@ -447,3 +439,6 @@ autocmd BufRead,BufNewFile *.vue set filetype=html
 let g:user_emmet_install_global = 0
 let g:user_emmet_leader_key='<C-\>'
 autocmd FileType html,css,eruby,vue EmmetInstall
+augroup filetype
+    autocmd! BufRead,BufNewFile BUILD set filetype=blade
+augroup end

@@ -44,9 +44,17 @@ brew install m4
 
 # common tools
 brew install ssh-copy-id openssl gnupg cowsay
-brew install git tmux ack ripgrep tree jq fzf
+brew install git diff-so-fancy tmux ack ripgrep tree jq fzf wget
 brew install vim --with-luajit --with-override-system-vi
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+brew install cmake
+
+# util
+brew install m-cli
+brew install screenfetch
+brew tap cjbassi/gotop
+brew install gotop
+brew cask install kap
 
 # programming languages
 brew install python elixir ocaml go
@@ -61,11 +69,19 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 e_header "Tuning macOS defaults..."
 defaults write -g ApplePressAndHoldEnabled -bool false
 defaults write -g KeyRepeat -int 0
-defaults write com.apple.screencapture location ~/Screenshots && killall SystemUIServer
+mkdir -p ~/Screenshot
+defaults write com.apple.screencapture name ""
+defaults write com.apple.screencapture location ~/Screenshot
+killall SystemUIServer
+defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO
+# sudo pmset -b tcpkeepalive 0
 
 # fonts
 brew tap caskroom/fonts
 brew cask install font-fira-code
+
+# apps
+brew cask install iina
 
 e_header "Happy hacking~"
 
