@@ -49,9 +49,12 @@ export FZF_DEFAULT_OPTS='--height 20% --layout=reverse --border'
 export PATH="$HOME/.conda/bin:$PATH"
 
 # go
+export GO111MODULE=on
 export GOROOT='/usr/local/opt/go/libexec'
-export GOPATH="$HOME/.go:$HOME/Code/go"
-export PATH="$GOROOT/bin:$HOME/.go/bin:$HOME/Code/go/bin:$PATH"
+export GOPATH="$HOME/Code/go"
+export PATH="$GOROOT/bin:$HOME/Code/go/bin:$PATH"
+# export GOPATH="$HOME/.go:$HOME/Code/go"
+# export PATH="$GOROOT/bin:$HOME/.go/bin:$HOME/Code/go/bin:$PATH"
 
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"

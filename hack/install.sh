@@ -12,6 +12,7 @@ DOTHOME="$(dirname "$(cd "$(dirname "$0")" && pwd -P)")"
 install() {
     link_dotfiles
     link_karabinar
+    link_neovim
 }
 
 link_dotfiles() {
@@ -31,6 +32,12 @@ link_karabinar() {
     e_success "$HOME/.config/karabiner"
     # https://pqrs.org/osx/karabiner/document.html#configuration-file-path
     launchctl kickstart -k gui/`id -u`/org.pqrs.karabiner.karabiner_console_user_server
+}
+
+link_neovim() {
+    mkdir -p ~/.config/
+    ln -sf "$DOTHOME/nvim" ~/.config/
+    e_success "$HOME/.config/nvim"
 }
 
 install

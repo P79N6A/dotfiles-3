@@ -28,26 +28,23 @@ Plug 'kana/vim-textobj-syntax'
 Plug 'kana/vim-textobj-function'
 Plug 'sgur/vim-textobj-parameter'
 Plug 'bps/vim-textobj-python'
-Plug 'RRethy/vim-illuminate'
 " searching
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'justinmk/vim-dirvish'
+Plug 'dyng/ctrlsf.vim'
 " tools
 Plug 'tpope/vim-fugitive'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'simnalamburt/vim-mundo'
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'Yggdroot/indentLine'
 Plug 'junegunn/vim-slash'
 Plug 'osyo-manga/vim-over'
-Plug 'MattesGroeger/vim-bookmarks'
 Plug 'Shougo/echodoc.vim'
 " languages, autocomplete, etc.
 Plug 'w0rp/ale'
 Plug 'SirVer/ultisnips'
-Plug 'Valloric/YouCompleteMe'
+Plug 'zxqfl/tabnine-vim'
 Plug 'fatih/vim-go'
 Plug 'rust-lang/rust.vim'
 Plug 'Vimjas/vim-python-pep8-indent'
@@ -59,6 +56,10 @@ Plug 'pangloss/vim-javascript'
 Plug 'scrooloose/NERDCommenter'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'editorconfig/editorconfig-vim'
+
+" Deprecated
+" Plug 'ludovicchabant/vim-gutentags'
+" Plug 'Valloric/YouCompleteMe'
 call plug#end()
 
 filetype plugin indent on
@@ -78,7 +79,7 @@ set nobackup
 set nowb
 set noswapfile
 set ruler
-set cmdheight=2
+set cmdheight=1
 set hidden
 set whichwrap+=<,>,h,l
 set ignorecase
@@ -179,8 +180,8 @@ set splitbelow
 set splitright
 set winwidth=30
 set winheight=1
-set previewheight=8
-set helpheight=12
+set previewheight=6
+set helpheight=10
 
 " Smart way to move between windows
 " <C-W>r swap the only two windows
@@ -188,9 +189,6 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
-
-" Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " Copy & paste to system clipboard
 set clipboard=unnamed
@@ -333,18 +331,6 @@ function! LightlineAleLinted() abort
     \ && ale#engine#IsCheckingBuffer(bufnr('')) == 0
 endfunction
 
-" gutentags
-let g:gutentags_project_root = ['.root', '.git', '.svn', '.hg', '.project']
-let g:gutentags_ctags_tagfile = '.tags'
-let s:vim_tags = expand('~/.cache/tags')
-let g:gutentags_cache_dir = s:vim_tags
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-if !isdirectory(s:vim_tags)
-    silent! call mkdir(s:vim_tags, 'p')
-endif
-
 " ale
 let g:ale_completion_delay = 500
 let g:ale_echo_delay = 20
@@ -364,33 +350,7 @@ let g:ale_linters = {
     \}
 let g:ale_go_gometalinter_options = '--fast --enable=staticcheck --enable=goimports'
 
-" YCM
-set completeopt-=preview
-let g:ycm_show_diagnostics_ui = 0
-let g:ycm_server_log_level = 'info'
-let g:ycm_min_num_identifier_candidate_chars = 2
-let g:ycm_complete_in_strings=1
-let g:ycm_python_binary_path = 'python'
-let g:ycm_filetype_blacklist = {
-    \ 'tagbar' : 1,
-    \ 'qf' : 1,
-    \ 'notes' : 1,
-    \ 'markdown' : 1,
-    \ 'unite' : 1,
-    \ 'text' : 1,
-    \ 'vimwiki' : 1,
-    \ 'pandoc' : 1,
-    \ 'infolog' : 1,
-    \ 'mail' : 1
-    \}
-" TODO: let g:ycm_filetype_whitelist
-let g:ycm_semantic_triggers =  {
-    \ 'c,cpp,python,go,javascript,lua': ['re!\w{2}'],
-    \}
-nnoremap <C-]> :YcmCompleter GoTo<CR>
-
 " UltiSnips
-" TODO: link to my dotfiles
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/snips']
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsExpandTrigger = '<C-j>'
@@ -442,3 +402,42 @@ autocmd FileType html,css,eruby,vue EmmetInstall
 augroup filetype
     autocmd! BufRead,BufNewFile BUILD set filetype=blade
 augroup end
+
+" Deprecated
+" gutentags
+" let g:gutentags_project_root = ['.root', '.git', '.svn', '.hg', '.project']
+" let g:gutentags_ctags_tagfile = '.tags'
+" let s:vim_tags = expand('~/.cache/tags')
+" let g:gutentags_cache_dir = s:vim_tags
+" let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+" let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+" let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+" if !isdirectory(s:vim_tags)
+"     silent! call mkdir(s:vim_tags, 'p')
+" endif
+
+" YCM
+" set completeopt-=preview
+" let g:ycm_show_diagnostics_ui = 0
+" let g:ycm_server_log_level = 'info'
+" let g:ycm_min_num_identifier_candidate_chars = 2
+" let g:ycm_complete_in_strings=1
+" let g:ycm_python_binary_path = 'python'
+" let g:ycm_filetype_blacklist = {
+"     \ 'tagbar' : 1,
+"     \ 'qf' : 1,
+"     \ 'notes' : 1,
+"     \ 'markdown' : 1,
+"     \ 'unite' : 1,
+"     \ 'text' : 1,
+"     \ 'vimwiki' : 1,
+"     \ 'pandoc' : 1,
+"     \ 'infolog' : 1,
+"     \ 'mail' : 1
+"     \}
+" let g:ycm_semantic_triggers =  {
+"     \ 'c,cpp,python,go,javascript,lua': ['re!\w{2}'],
+"     \}
+" nnoremap <C-]> :YcmCompleter GoTo<CR>
+
+
