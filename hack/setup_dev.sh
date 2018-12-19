@@ -45,7 +45,7 @@ brew install m4
 # common tools
 brew install ssh-copy-id openssl gnupg cowsay
 brew install git diff-so-fancy tmux ack ripgrep tree jq fzf wget
-brew install vim --with-luajit --with-override-system-vi
+brew install neovim
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 brew install cmake
 

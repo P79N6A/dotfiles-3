@@ -8,11 +8,14 @@ e_error()    { echo -e " \033[1;31m✖\033[0m  $@"; }
 e_arrow()    { echo -e " \033[1;33m➜\033[0m  $@"; }
 
 DOTHOME="$(dirname "$(cd "$(dirname "$0")" && pwd -P)")"
+USERNAME=`whoami`
 
 install() {
-    link_dotfiles
-    link_karabinar
     link_neovim
+    link_dotfiles
+    if [ "$USERNAME" = "cosmtrek" ]; then
+        link_karabinar
+    fi
 }
 
 link_dotfiles() {

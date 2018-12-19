@@ -27,12 +27,14 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-fugitive'
 Plug 'simnalamburt/vim-mundo'
 Plug 'Yggdroot/indentLine'
 " completion, lint, languages, etc.
 Plug 'neomake/neomake'
 Plug 'zxqfl/tabnine-vim'
+Plug 'jsfaint/gen_tags.vim'
 Plug 'fatih/vim-go'
 Plug 'rust-lang/rust.vim'
 Plug 'Vimjas/vim-python-pep8-indent'
@@ -49,8 +51,14 @@ set number
 set relativenumber
 set numberwidth=2
 
-let g:python_host_prog = '/usr/local/bin/python2'
-let g:python3_host_prog = '/usr/local/bin/python3'
+" check environment
+if $USER == "yurunyu"
+    let g:python_host_prog = '/home/linuxbrew/.linuxbrew/bin/python2'
+    let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'
+else
+    let g:python_host_prog = '/usr/local/bin/python2'
+    let g:python3_host_prog = '/usr/local/bin/python3'
+endif
 
 " Colorscheme
 let g:seoul256_srgb = 1
@@ -89,6 +97,23 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+
+" https://robots.thoughtbot.com/vim-splits-move-faster-and-more-naturally
+" More natural split opening
+set splitbelow
+set splitright
+set winwidth=30
+set winheight=2
+set previewheight=12
+set helpheight=12
+
+" Copy & paste to system clipboard
+set clipboard=unnamed
+" No clipboard
+nnoremap <leader>y :w! /tmp/vclipboard<cr>
+vnoremap <leader>y :w! /tmp/vclipboard<cr>
+nnoremap <leader>p :r /tmp/vclipboard<cr>
+vnoremap <leader>p :r /tmp/vclipboard<cr>
 
 " ctags path
 set tags=./.tags;,.tags
@@ -163,8 +188,8 @@ let g:lightline = {
     \   'filename': 'LightlineFilename',
     \ },
     \ 'component_expand': {
-    \   'linter_warnings': 'LightlineAleWarnings',
-    \   'linter_errors': 'LightlineAleErrors',
+    \   'linter_warnings': 'LightlineNeomakeWarnings',
+    \   'linter_errors': 'LightlineNeomakeErrors',
     \ },
     \ 'component_type': {
     \   'linter_warnings': 'warning',
@@ -176,6 +201,28 @@ function! LightlineFilename()
   let filename = expand('%:t') !=# '' ? expand('%') : '[No Name]'
   let modified = &modified ? ' +' : ''
   return filename . modified
+endfunction
+
+" lightline-neomake
+augroup lightline#neomake
+  autocmd!
+  autocmd User NeomakeFinished nested call lightline#update()
+augroup END
+
+function! LightlineNeomakeWarnings() abort
+  if !exists(":Neomake")
+    return ''
+  endif
+  let l:warns = neomake#statusline#LoclistCounts()['W']
+  return warns == 0 ? '' : printf('W%d', warns)
+endfunction
+
+function! LightlineNeomakeErrors() abort
+  if !exists(":Neomake")
+    return ''
+  endif
+  let l:errors = neomake#statusline#LoclistCounts()['E']
+  return errors == 0 ? '' : printf('E%d', errors)
 endfunction
 
 " LeaderF

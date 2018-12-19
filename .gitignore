@@ -71,11 +71,6 @@ xcuserdata
 DerivedData
 *.xcuserstate
 
-# Eclipse
-.classpath
-.project
-.settings/
-
 # Intellij
 .idea/
 *.iml
@@ -91,3 +86,9 @@ tags
 GTAGS
 GPATH
 GRTAGS
+
+# working related
+*_local.conf
+run_local.sh
+output/
+*-remote/
