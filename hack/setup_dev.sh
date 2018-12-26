@@ -44,10 +44,11 @@ brew install m4
 
 # common tools
 brew install ssh-copy-id openssl gnupg cowsay
-brew install git diff-so-fancy tmux ack ripgrep tree jq fzf wget
+brew install git diff-so-fancy tmux ack ripgrep tree jid fzf wget cmake ctop
 brew install neovim
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
-brew install cmake
+brew tap wagoodman/dive
+brew install dive
 
 # util
 brew install m-cli

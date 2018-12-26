@@ -28,13 +28,15 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-vinegar'
+Plug 'skywind3000/vim-preview'
 Plug 'tpope/vim-fugitive'
 Plug 'simnalamburt/vim-mundo'
 Plug 'Yggdroot/indentLine'
+Plug 'simeji/winresizer'
 " completion, lint, languages, etc.
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'neomake/neomake'
 Plug 'zxqfl/tabnine-vim'
-Plug 'jsfaint/gen_tags.vim'
 Plug 'fatih/vim-go'
 Plug 'rust-lang/rust.vim'
 Plug 'Vimjas/vim-python-pep8-indent'
@@ -129,16 +131,16 @@ augroup spacetab
     autocmd BufRead,BufNewFile *.c set ts=4 sw=4 et sts=4
     autocmd BufRead,BufNewFile *.h set ts=4 sw=4 et sts=4
     autocmd BufRead,BufNewFile *.m set ts=4 sw=4 et sts=4
-    autocmd BufRead,BufNewFile *.py set ts=4 sw=4 et sts=4 autoindent shiftround
+    autocmd BufRead,BufNewFile *.go set ts=4 sw=4 ai
+    autocmd BufRead,BufNewFile *.py set ts=4 sw=4 et sts=4 ai shiftround
     autocmd BufRead,BufNewFile *.js set ts=2 sw=2 et sts=4
     autocmd BufRead,BufNewFile *.css set ts=2 sw=2 et sts=2
     autocmd BufRead,BufNewFile *.scss set ts=2 sw=2 et sts=2
     autocmd BufRead,BufNewFile *.html set ts=2 sw=2 et sts=2
     autocmd BufRead,BufNewFile *.vue set ts=2 sw=2 et sts=2
-    autocmd BufRead,BufNewFile *.xml set ts=4 sw=4 et sts=4 ai
     autocmd BufRead,BufNewFile *.json set ts=4 sw=4 et sts=4 ai
+    autocmd BufRead,BufNewFile *.xml set ts=4 sw=4 et sts=4 ai
     autocmd BufRead,BufNewFile *.rb set ts=2 sw=2 et sts=2 ai
-    autocmd BufRead,BufNewFile *.go set ts=4 sw=4 ai
     autocmd BufRead,BufNewFile *.yml set ts=2 sw=2 et sts=2 ai
 augroup END
 
@@ -163,6 +165,9 @@ autocmd Filetype gitcommit setlocal spell textwidth=78
 " NERDTree
 nmap ee :NERDTreeToggle<CR>
 
+" netrw
+let g:netrw_liststyle = 3
+
 " UndoTree
 if has("persistent_undo")
     set undodir=~/.undodir/
@@ -172,6 +177,15 @@ endif
 " Easy Align
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
+
+" tags
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+let g:gutentags_ctags_tagfile = '.tags'
+let s:vim_tags = expand('~/.cache/tags')
+let g:gutentags_cache_dir = s:vim_tags
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
 " lightline
 let g:lightline = {
@@ -225,6 +239,11 @@ function! LightlineNeomakeErrors() abort
   return errors == 0 ? '' : printf('E%d', errors)
 endfunction
 
+" neomake
+call neomake#configure#automake('w')
+let g:neomake_list_height = 5
+let g:neomake_go_gometalinter_args = ['--disable-all', '--fast', '--enable=staticcheck', '--enable=goimports']
+
 " LeaderF
 let g:Lf_WorkingDirectoryMode = 'Ac'
 let g:Lf_CacheDirectory = expand('~/.vim/cache')
@@ -238,10 +257,6 @@ nnoremap <Leader>lm :LeaderfMru<CR>
 
 " indent line
 let g:indentLine_char = '¦'
-
-" neomake
-call neomake#configure#automake('w')
-let g:neomake_go_gometalinter_args = ['--disable-all', '--fast', '--enable=staticcheck', '--enable=goimports']
 
 " Go
 let g:go_fmt_autosave = 1
