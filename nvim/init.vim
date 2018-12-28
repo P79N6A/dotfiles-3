@@ -34,8 +34,6 @@ Plug 'simnalamburt/vim-mundo'
 Plug 'Yggdroot/indentLine'
 Plug 'simeji/winresizer'
 " completion, lint, languages, etc.
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'neomake/neomake'
 Plug 'zxqfl/tabnine-vim'
 Plug 'fatih/vim-go'
 Plug 'rust-lang/rust.vim'
@@ -45,6 +43,8 @@ Plug 'uarun/vim-protobuf'
 Plug 'scrooloose/NERDCommenter'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'neomake/neomake'
 call plug#end()
 
 " misc
@@ -242,7 +242,7 @@ endfunction
 " neomake
 call neomake#configure#automake('w')
 let g:neomake_list_height = 5
-let g:neomake_go_gometalinter_args = ['--disable-all', '--fast', '--enable=staticcheck', '--enable=goimports']
+let g:neomake_go_gometalinter_args = ['--disable-all', '--fast', '--enable=staticcheck']
 
 " LeaderF
 let g:Lf_WorkingDirectoryMode = 'Ac'

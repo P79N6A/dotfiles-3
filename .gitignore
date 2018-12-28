@@ -92,3 +92,4 @@ GRTAGS
 run_local.sh
 output/
 *-remote/
+tmp/
