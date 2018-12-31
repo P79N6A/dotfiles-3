@@ -14,7 +14,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'junegunn/seoul256.vim'
 Plug 'cosmtrek/lightline.vim'
 Plug 'mhinz/vim-signify'
-" editing
+" edit, search, etc.
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-ragtag'
@@ -23,6 +23,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'kana/vim-textobj-user'
 Plug 'sgur/vim-textobj-parameter'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'justinmk/vim-sneak'
 " files
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -49,9 +50,22 @@ call plug#end()
 
 " misc
 set termguicolors
+set lazyredraw
 set number
 set relativenumber
+set ignorecase
+set smartcase
 set numberwidth=2
+set pumheight=10
+set scrolloff=5
+
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+	set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+else
+	set wildignore+=.git\*,.hg\*,.svn\*
+endif
 
 " check environment
 if $USER == "yurunyu"
@@ -122,7 +136,6 @@ set tags=./.tags;,.tags
 
 " tab or space
 set expandtab
-set smarttab
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
@@ -177,6 +190,9 @@ endif
 " Easy Align
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
+
+" Sneak
+let g:sneak#label = 1
 
 " tags
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']

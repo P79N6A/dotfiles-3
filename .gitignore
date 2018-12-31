@@ -93,3 +93,4 @@ run_local.sh
 output/
 *-remote/
 tmp/
+.air.conf

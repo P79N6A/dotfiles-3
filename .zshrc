@@ -34,7 +34,7 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 
 # locale
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-export TERM=xterm-256color
+[ -z "$TMUX" ] && export TERM=screen-256color
 
 # editor
 export EDITOR='nvim'
