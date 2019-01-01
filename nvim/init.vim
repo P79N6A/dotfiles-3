@@ -24,6 +24,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'sgur/vim-textobj-parameter'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'justinmk/vim-sneak'
+Plug 'machakann/vim-highlightedyank'
 " files
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -58,6 +59,7 @@ set smartcase
 set numberwidth=2
 set pumheight=10
 set scrolloff=5
+set colorcolumn=80
 
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
