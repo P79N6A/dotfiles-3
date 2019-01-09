@@ -25,6 +25,7 @@ Plug 'sgur/vim-textobj-parameter'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'justinmk/vim-sneak'
 Plug 'machakann/vim-highlightedyank'
+Plug 'junegunn/goyo.vim'
 " files
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -57,7 +58,7 @@ set relativenumber
 set ignorecase
 set smartcase
 set numberwidth=2
-set pumheight=10
+set pumheight=6
 set scrolloff=5
 set colorcolumn=80
 
@@ -91,10 +92,14 @@ nnoremap <leader>w :w!<cr>
 " Emacs style :)
 inoremap <C-n> <down>
 inoremap <C-p> <up>
+inoremap <C-b> <left>
+inoremap <C-f> <right>
 inoremap <C-a> <home>
 inoremap <C-e> <end>
 cnoremap <C-n> <down>
 cnoremap <C-p> <up>
+cnoremap <C-b> <left>
+cnoremap <C-f> <right>
 cnoremap <C-a> <home>
 cnoremap <C-e> <end>
 " Remap Vim 0 to first non-blank character
@@ -163,7 +168,7 @@ augroup END
 " Plugin settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-better-whitespace
-highlight ExtraWhitespace ctermbg=Red
+let g:strip_whitespace_on_save = 1
 
 " NERDCommenter
 let g:NERDSpaceDelims = 1
@@ -257,11 +262,6 @@ function! LightlineNeomakeErrors() abort
   return errors == 0 ? '' : printf('E%d', errors)
 endfunction
 
-" neomake
-call neomake#configure#automake('w')
-let g:neomake_list_height = 5
-let g:neomake_go_gometalinter_args = ['--disable-all', '--fast', '--enable=staticcheck']
-
 " LeaderF
 let g:Lf_WorkingDirectoryMode = 'Ac'
 let g:Lf_CacheDirectory = expand('~/.vim/cache')
@@ -275,6 +275,14 @@ nnoremap <Leader>lm :LeaderfMru<CR>
 
 " indent line
 let g:indentLine_char = '¦'
+
+" neomake
+call neomake#configure#automake('w')
+let g:neomake_open_list = 2
+let g:neomake_list_height = 5
+let g:neomake_go_enabled_makers = ['gometalinter']
+let g:neomake_go_gometalinter_args =
+    \ ['--disable-all', '--fast', '--enable=gotype', '--enable=staticcheck']
 
 " Go
 let g:go_fmt_autosave = 1
