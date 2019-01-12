@@ -1,4 +1,4 @@
-################################### Zplug ######################################
+################################### Zplug ####################################
 
 if [[ ! -d ~/.zplug ]]; then
     git clone https://github.com/zplug/zplug ~/.zplug
@@ -24,7 +24,7 @@ if ! zplug check --verbose; then
 fi
 zplug load
 
-################################### Settings ###################################
+################################### Settings #################################
 
 username=`whoami`
 
@@ -51,47 +51,49 @@ else
     export no_proxy='localhost,127.0.0.1,127.0.1.1'
 fi
 
-################################### PATH #######################################
-
-# n-install
-export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
-
-# rust
-export PATH="$HOME/.cargo/bin:$PATH"
+################################### PATH #####################################
+BINPATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 if [ $username = "yurunyu" ]; then
+    # linuxbrew
+    BINPATH+=":/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin"
+
     # go
     export GOPATH="$HOME/repos/go"
-    # path
-    export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH:/usr/local/go/bin:$HOME/bin:$HOME/repos/go/bin:/opt/tiger/ss_lib/bin:/opt/tiger/ss_bin"
+    BINPATH+=":$GOROOT/bin:$GOPATH/bin"
+
+    # other
+    BINPATH+=":$HOME/bin:/opt/tiger/ss_lib/bin:/opt/tiger/ss_bin"
 else
-    # python
-    export PATH="$HOME/.conda/bin:$PATH"
+    # GNU tools
+    BINPATH+=":/usr/local/opt/coreutils/libexec/gnubin"
 
     # go
     export GO111MODULE=on
     export GOROOT='/usr/local/opt/go/libexec'
     export GOPATH="$HOME/Code/go"
-    export PATH="$GOROOT/bin:$HOME/Code/go/bin:$PATH"
+    BINPATH+=":$GOROOT/bin:$GOPATH/bin"
+
+    # python
+    BINPATH+=":$HOME/.conda/bin"
 
     # flutter
-    export PATH="$HOME/Code/flutter/bin:$PATH"
-
-    # pipenv
-    export PIPENV_VENV_IN_PROJECT="1"
+    BINPATH+=":$HOME/Code/flutter/bin"
 
     # java
     # export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-
-    # GNU tools
-    export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-    export PATH="/usr/local/opt/m4/bin:$PATH"
-
-    # brew
-    export PATH="/usr/local/sbin:$PATH"
 fi
 
-################################### Alias ######################################
+# n-install
+export N_PREFIX="$HOME/.n";
+BINPATH+=":$N_PREFIX/bin"
+
+# rust
+BINPATH+=":$HOME/.cargo/bin"
+
+export PATH=$BINPATH
+
+################################### Alias ####################################
 
 alias g=git
 alias v=nvim
@@ -109,7 +111,7 @@ else
     alias cleards="find ~ -name '*.DS_Store' -type f -delete && echo 'ALL .DS_STORE FILES RECURSIVELY REMOVED'"
 fi
 
-################################# Function ####################################
+################################# Function ###################################
 
 function t() {
     tmux a -t $1
@@ -129,6 +131,14 @@ function md() {
 
 function f() {
 	find . -name "$1" 2>&1 | grep -v 'Permission denied'
+}
+
+# build with os default path
+function rawpath() {
+    path2=$PATH
+    export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
+    command $@
+    export PATH=$path2
 }
 
 # iterm2

@@ -37,9 +37,8 @@ brew install gzip
 brew install watch
 brew install wdiff --with-gettext
 brew install bash
-brew install make --with-default-names
 brew install gpatch
-brew install m4
+brew install make
 # brew install gdb  # gdb requires further actions to make it work. See `brew info gdb`.
 
 # common tools
